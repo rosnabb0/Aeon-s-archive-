@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Curator's Suite - Master Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;700;800&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Literata:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#143022",
+                    "surface-container": "#142032",
+                    "on-primary-container": "#7c92c2",
+                    "secondary": "#e9c33a",
+                    "secondary-fixed-dim": "#e9c33a",
+                    "inverse-on-surface": "#263144",
+                    "surface-bright": "#2e394d",
+                    "background": "#071325",
+                    "surface-container-lowest": "#030e20",
+                    "secondary-fixed": "#ffe080",
+                    "surface": "#071325",
+                    "on-primary-fixed": "#001a41",
+                    "inverse-surface": "#d7e3fc",
+                    "on-surface-variant": "#c4c6d0",
+                    "outline-variant": "#44474f",
+                    "surface-container-highest": "#2a3549",
+                    "primary": "#b0c6fa",
+                    "error": "#ffb4ab",
+                    "on-error": "#690005",
+                    "primary-container": "#102a54",
+                    "tertiary-fixed-dim": "#aeceba",
+                    "tertiary-fixed": "#caead5",
+                    "surface-container-low": "#101c2e",
+                    "secondary-container": "#ba9800",
+                    "outline": "#8e9099",
+                    "on-tertiary": "#1a3628",
+                    "tertiary": "#aeceba",
+                    "on-primary-fixed-variant": "#2f4672",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary": "#3c2f00",
+                    "surface-container-high": "#1f2a3d",
+                    "inverse-primary": "#485e8b",
+                    "on-tertiary-fixed": "#042014",
+                    "on-tertiary-container": "#7b9987",
+                    "on-background": "#d7e3fc",
+                    "on-primary": "#17305a",
+                    "on-surface": "#d7e3fc",
+                    "error-container": "#93000a",
+                    "primary-fixed-dim": "#b0c6fa",
+                    "on-secondary-container": "#3f3200",
+                    "surface-variant": "#2a3549",
+                    "surface-dim": "#071325",
+                    "on-secondary-fixed-variant": "#564500",
+                    "on-tertiary-fixed-variant": "#314d3d",
+                    "surface-tint": "#b0c6fa",
+                    "on-secondary-fixed": "#231b00",
+                    "primary-fixed": "#d8e2ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "margin-desktop": "64px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Space Mono", "monospace"],
+                    "headline-xl": ["Bricolage Grotesque", "sans-serif"],
+                    "headline-lg": ["Bricolage Grotesque", "sans-serif"],
+                    "body-md": ["Literata", "serif"],
+                    "body-lg": ["Literata", "serif"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #071325;
+            color: #d7e3fc;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(20, 32, 50, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(174, 206, 186, 0.1);
+        }
+
+        .parchment-glow {
+            box-shadow: 0 0 15px 0px rgba(233, 195, 58, 0.05);
+            transition: all 0.5s ease;
+        }
+
+        .parchment-glow:hover {
+            box-shadow: 0 0 25px 5px rgba(233, 195, 58, 0.15);
+        }
+
+        .aeon-mark {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #030e20;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #143022;
+        }
+
+        .swirl-bg {
+            background: radial-gradient(circle at top right, #102a54, transparent),
+                        radial-gradient(circle at bottom left, #071325, transparent);
+        }
+        
+        .bento-card {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface bg-background min-h-screen flex swirl-bg">
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container-low border-r border-outline/20 flex flex-col p-gutter space-y-8 shadow-2xl">
+<div class="flex flex-col gap-1">
+<h1 class="font-headline-lg text-primary tracking-tight">Reading Suite</h1>
+<p class="font-label-sm text-on-surface-variant uppercase">Scholarly Tools</p>
+</div>
+<nav class="flex flex-col space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded transition-transform active:scale-95 group" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="font-body-lg">Return to Archive</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-secondary-container text-on-secondary-container rounded transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-body-lg">Table of Contents</span>
+</a>
+</nav>
+<div class="mt-auto pt-8 border-t border-outline/10 opacity-60">
+<div class="aeon-mark font-label-sm text-secondary tracking-[0.5em] mb-4">EST 2026</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-64 p-margin-desktop flex flex-col">
+<!-- Header -->
+<header class="flex justify-between items-end mb-12">
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<span class="font-label-sm text-secondary bg-secondary/10 px-2 py-1 rounded">MASTER LEDGER</span>
+<span class="w-12 h-[1px] bg-outline/30"></span>
+</div>
+<h2 class="font-headline-xl text-primary">The Master Ledger - Curator's Suite</h2>
+</div>
+<button class="bg-secondary text-on-secondary font-label-sm px-8 py-4 rounded flex items-center gap-3 hover:shadow-[0_0_20px_rgba(233,195,58,0.4)] transition-all active:scale-95 group">
+<span class="material-symbols-outlined">add_circle</span>
+            NEW ENTRY
+        </button>
+</header>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-3 gap-8 mb-12">
+<div class="bento-card glass-card parchment-glow p-8 rounded flex flex-col gap-4 border-t-2 border-t-secondary/40">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-on-surface-variant">ARCHIVED POEMS</span>
+<span class="material-symbols-outlined text-secondary">ink_pen</span>
+</div>
+<div class="text-6xl font-headline-xl text-primary">0</div>
+<div class="font-body-md text-on-tertiary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">trending_flat</span>
+                No entries this cycle
+            </div>
+</div>
+<div class="bento-card glass-card parchment-glow p-8 rounded flex flex-col gap-4 border-t-2 border-t-primary/40">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-on-surface-variant">SHORT STORIES</span>
+<span class="material-symbols-outlined text-primary">auto_stories</span>
+</div>
+<div class="text-6xl font-headline-xl text-primary">0</div>
+<div class="font-body-md text-on-tertiary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">trending_flat</span>
+                No entries this cycle
+            </div>
+</div>
+<div class="bento-card glass-card parchment-glow p-8 rounded flex flex-col gap-4 border-t-2 border-t-tertiary/40">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-on-surface-variant">GRAND NOVELS</span>
+<span class="material-symbols-outlined text-tertiary">menu_book</span>
+</div>
+<div class="text-6xl font-headline-xl text-primary">0</div>
+<div class="font-body-md text-on-tertiary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">lock</span>
+                Stable archive state
+            </div>
+</div>
+</section>
+<!-- Ledger Table Section -->
+<section class="glass-card rounded overflow-hidden flex flex-col flex-1 shadow-2xl border border-outline/10">
+<div class="px-8 py-6 bg-surface-container-high/50 border-b border-outline/10 flex justify-between items-center">
+<div class="flex gap-8">
+<button class="font-label-sm text-primary border-b-2 border-primary pb-1">ALL MANUSCRIPTS</button>
+<button class="font-label-sm text-on-surface-variant hover:text-primary transition-colors">PENDING REVIEW</button>
+<button class="font-label-sm text-on-surface-variant hover:text-primary transition-colors">CELESTIAL COLLECTIONS</button>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container-lowest border border-outline/20 rounded-full pl-10 pr-4 py-2 text-label-sm focus:ring-1 focus:ring-primary w-64 uppercase text-on-surface outline-none" placeholder="SEARCH ARCHIVE..." type="text"/>
+</div>
+</div>
+<div class="overflow-y-auto custom-scrollbar flex-1 relative min-h-[400px]">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container/95 backdrop-blur-sm z-10">
+<tr class="border-b border-outline/10">
+<th class="px-8 py-6 font-label-sm text-secondary">MANUSCRIPT TITLE</th>
+<th class="px-8 py-6 font-label-sm text-secondary">CATEGORY</th>
+<th class="px-8 py-6 font-label-sm text-secondary">TEMPORAL ORIGIN</th>
+<th class="px-8 py-6 font-label-sm text-secondary">STATUS</th>
+<th class="px-8 py-6 font-label-sm text-secondary text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="font-body-md divide-y divide-outline/5">
+<!-- Empty State Message -->
+<tr>
+<td class="py-24 text-center" colspan="5">
+<div class="flex flex-col items-center gap-4 opacity-40">
+<span class="material-symbols-outlined text-6xl">cloud_off</span>
+<p class="font-body-lg italic">The archive is currently silent. No manuscripts have been entered yet.</p>
+<button class="mt-2 text-secondary font-label-sm hover:underline flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                    CREATE FIRST ENTRY
+                </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-8 py-4 bg-surface-container-low border-t border-outline/10 flex justify-between items-center">
+<span class="font-label-sm text-on-surface-variant italic">Displaying 0 of 0 Manuscripts</span>
+<div class="flex gap-4">
+<button class="p-2 text-on-surface-variant/30 cursor-not-allowed">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-primary">0</span>
+<span class="font-label-sm text-on-surface-variant">/</span>
+<span class="font-label-sm text-on-surface-variant">0</span>
+</div>
+<button class="p-2 text-on-surface-variant/30 cursor-not-allowed">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-12 mt-12 border-t border-outline/10 flex flex-col items-center gap-8 text-center bg-surface-container-lowest">
+<div class="flex gap-12 font-label-sm">
+<a class="text-on-tertiary-container hover:text-primary transition-all duration-700 hover:tracking-widest uppercase" href="#">The Inkwell</a>
+<a class="text-on-tertiary-container hover:text-primary transition-all duration-700 hover:tracking-widest uppercase" href="#">Celestial Terms</a>
+<a class="text-on-tertiary-container hover:text-primary transition-all duration-700 hover:tracking-widest uppercase" href="#">Library Map</a>
+</div>
+<p class="font-body-md text-on-surface-variant opacity-80 hover:opacity-100 transition-opacity">
+            © 1892 Aeon's Archive. Curated for the Eternal Dreamer.
+        </p>
+</footer>
+</main>
+<!-- Starfield Layer -->
+<div class="fixed inset-0 pointer-events-none z-[-1] opacity-20">
+<div class="absolute inset-0" id="starfield"></div>
+</div>
+<script>
+    // Subtle Starfield Animation
+    const starfield = document.getElementById('starfield');
+    for (let i = 0; i < 70; i++) {
+        const star = document.createElement('div');
+        star.className = 'absolute bg-white rounded-full';
+        const size = Math.random() * 2 + 0.5;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.opacity = Math.random();
+        star.style.filter = 'blur(1px)';
+        
+        star.animate([
+            { opacity: star.style.opacity },
+            { opacity: Math.random() * 0.1 },
+            { opacity: star.style.opacity }
+        ], {
+            duration: 3000 + Math.random() * 5000,
+            iterations: Infinity
+        });
+        
+        starfield.appendChild(star);
+    }
+</script>
+</body></html>
