@@ -157,7 +157,7 @@
 <button class="text-secondary active:scale-95 duration-200 hover:opacity-80 transition-opacity">
 <span class="material-symbols-outlined" data-icon="menu">menu</span>
 </button>
-<h1 class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-secondary dark:text-secondary-fixed">AEON'S ARCHIVE</h1>
+<a href="index.html"><h1 class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-secondary dark:text-secondary-fixed">AEON'S ARCHIVE</h1></a>
 <button class="text-secondary active:scale-95 duration-200 hover:opacity-80 transition-opacity">
 <span class="material-symbols-outlined" data-icon="light_mode">light_mode</span>
 </button>
@@ -165,7 +165,6 @@
 <main class="pt-24 pb-32 px-margin-mobile swirl-bg min-h-screen relative">
 <!-- Animated Background Component -->
 <div class="absolute inset-0 pointer-events-none opacity-40">
-
 </div>
 <!-- Vertical Anchor Mark -->
 <div class="fixed right-2 top-1/2 -translate-y-1/2 z-10 hidden md:block">
@@ -181,20 +180,8 @@
 </section>
 <!-- Primary Actions -->
 <section class="grid grid-cols-1 gap-4 mb-12 relative z-10">
-<button class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
-<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">The Eternal Library</span>
-</div>
-<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</button>
-<button class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined" data-icon="ink_pen">ink_pen</span>
-<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Poem Archive</span>
-</div>
-<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</button>
+<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="archive.html"><div class="flex items-center gap-4"><span class="material-symbols-outlined" data-icon="library_books">library_books</span><span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">The Eternal Library</span></div><span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span></a>
+<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html"><div class="flex items-center gap-4"><span class="material-symbols-outlined" data-icon="ink_pen">ink_pen</span><span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Poem Archive</span></div><span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span></a>
 </section>
 <!-- Editor's Note -->
 <section class="mb-12 relative z-10">
@@ -290,19 +277,19 @@
 </main>
 <!-- Bottom Navigation Bar -->
 <nav class="fixed bottom-0 w-full rounded-t-full z-50 bg-surface-container/90 dark:bg-surface-container/90 backdrop-blur-2xl border-t border-outline-variant/10 shadow-[0_-4px_20px_rgba(233,195,58,0.05)] flex justify-around items-center h-20 px-4 pb-2">
-<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="index.html">
 <span class="material-symbols-outlined" data-icon="home">home</span>
 <span class="font-label-sm text-label-sm mt-0.5">Home</span>
 </a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150" href="archive.html">
 <span class="material-symbols-outlined" data-icon="library_books">library_books</span>
 <span class="font-label-sm text-label-sm">Archive</span>
 </a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150" href="login.html">
 <span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
 <span class="font-label-sm text-label-sm">Write</span>
 </a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150" href="login.html">
 <span class="material-symbols-outlined" data-icon="person">person</span>
 <span class="font-label-sm text-label-sm">Profile</span>
 </a>
@@ -327,8 +314,4 @@
                 navItems.forEach(nav => {
                     nav.className = "flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150";
                 });
-                item.className = "flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 active:scale-90 transition-transform duration-150";
-            });
-        });
-    </script>
-</
+                item.className = "flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 active:scale-90 transition
