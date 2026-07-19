@@ -13,11 +13,11 @@
         theme: {
           extend: {
             "colors": {
-                    "surface": "#071325",
-                    "surface-dim": "#071325",
-                    "surface-bright": "#2e394d",
-                    "surface-container-lowest": "#030e20",
-                    "surface-container-low": "#101c2e",
+                    "surface": "#041329",
+                    "surface-dim": "#041329",
+                    "surface-bright": "#2c3951",
+                    "surface-container-lowest": "#010e24",
+                    "surface-container-low": "#0d1c32",
                     "surface-container": "#112036",
                     "surface-container-high": "#1c2a41",
                     "surface-container-highest": "#27354c",
@@ -37,7 +37,7 @@
                     "on-tertiary": "#372f22",
                     "tertiary-container": "#beb19f",
                     "on-tertiary-container": "#4d4436",
-                    "background": "#071325",
+                    "background": "#041329",
                     "on-background": "#d6e3ff",
                     "error": "#ffb4ab",
                     "on-error": "#690005",
@@ -80,9 +80,9 @@
     </script>
 <style>
         body {
-            background-color: #071325;
+            background-color: #041329;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(242, 202, 80, 0.05) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, rgba(242, 202, 80, 0.08) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(182, 198, 237, 0.05) 0px, transparent 50%);
             scrollbar-width: thin;
             scrollbar-color: #d4af37 transparent;
@@ -128,47 +128,49 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        .sidebar-fixed {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 50;
+        }
     </style>
 </head>
-<body class="font-sans text-on-surface overflow-x-hidden min-h-screen flex flex-col">
-<!-- TopNavBar -->
-<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-lg border-b border-outline/10 shadow-lg shadow-surface-container-lowest/50 transition-all duration-500 ease-in-out">
-<div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
-<div class="flex items-center gap-4">
+<body class="font-sans text-on-surface overflow-x-hidden min-h-screen flex">
+<!-- SideNavBar: Permanently Visible -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline/10 shadow-2xl flex flex-col p-6 pt-8 z-50">
+<div class="mb-12 flex items-center gap-3 px-4">
 <span class="material-symbols-outlined text-primary text-3xl accent_glow">menu_book</span>
-<h1 class="font-display-lg text-headline-md text-primary tracking-tight">Aeon's Archive</h1>
-</div>
-<nav class="hidden md:flex gap-8 items-center">
-<button class="material-symbols-outlined text-primary hover:scale-110 transition-transform">star_rate</button>
-</nav>
-<div class="md:hidden">
-<button class="material-symbols-outlined text-primary">menu</button>
+<div>
+<h1 class="font-display-lg text-xl text-primary tracking-tight leading-none">Aeon's Archive</h1>
+<p class="font-label-sm text-[8px] text-outline uppercase tracking-[0.3em] mt-1">Celestial Repository</p>
 </div>
 </div>
-</header>
-<!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container-low border-r border-outline/10 shadow-2xl pt-24 hidden lg:flex flex-col p-gutter space-y-2">
-<div class="mb-8">
-<h2 class="font-sans font-bold text-primary text-xl tracking-wide uppercase">Reading Suite</h2>
-<p class="font-label-sm text-[10px] text-outline uppercase tracking-[0.2em] opacity-60">Scholarly Tools</p>
-</div>
-<nav class="space-y-4">
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded transition-all group" href="dashboard.html">
-<span class="material-symbols-outlined">folder_managed</span>
+<div class="space-y-2 mb-12">
+<h2 class="font-sans font-bold text-primary text-xs tracking-widest uppercase opacity-60 px-4 mb-4">Reading Suite</h2>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded transition-all group" onclick="openManager()">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">folder_managed</span>
 <span class="font-body-md">Manuscript Manager</span>
-</a>
+</button>
 <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded shadow-md" href="#">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_note</span>
 <span class="font-body-md font-semibold">Submit Manuscript</span>
 </a>
-</nav>
-<div class="mt-auto pt-8 border-t border-outline/10 text-center">
+</div>
+<div class="mt-auto pt-8 border-t border-outline/10 flex flex-col items-center px-4 pb-8">
 <div class="material-symbols-outlined text-primary/20 text-6xl twinkle">auto_awesome</div>
-<p class="font-label-sm text-[10px] mt-4 opacity-40">THE CURATOR'S QUILL</p>
+<p class="font-label-sm text-[10px] mt-4 opacity-40 uppercase tracking-widest">The Curator's Quill</p>
+<a class="mt-6 flex items-center gap-2 text-xs text-on-surface-variant hover:text-primary transition-colors" href="archive.html">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+            Return to Archive
+        </a>
 </div>
 </aside>
 <!-- Main Content Canvas -->
-<main class="flex-grow pt-32 pb-24 px-margin-mobile md:px-margin-desktop lg:pl-80">
+<main class="flex-grow ml-64 pt-16 pb-24 px-margin-mobile md:px-margin-desktop">
 <div class="max-w-4xl mx-auto">
 <!-- Header Section -->
 <div class="mb-12 text-center">
@@ -182,15 +184,14 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 <div class="md:col-span-2">
 <label class="font-label-sm text-[10px] uppercase tracking-widest opacity-60 block mb-2">Manuscript Title</label>
-<input class="w-full bg-transparent border-0 border-b border-outline-variant/30 font-headline-md text-headline-md text-on-tertiary-container py-2 placeholder:text-on-tertiary-container/30 focus:border-primary transition-all" name="title" placeholder="A Dream Within A Dream..." type="text"/>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/30 font-headline-md text-headline-md text-on-tertiary-container py-2 placeholder:text-on-tertiary-container/30 focus:border-primary transition-all" id="formTitle" name="title" placeholder="A Dream Within A Dream..." required="" type="text"/>
 </div>
 <div>
 <label class="font-label-sm text-[10px] uppercase tracking-widest opacity-60 block mb-2">Category</label>
-<select class="w-full bg-transparent border-0 border-b border-outline-variant/30 font-body-lg text-body-lg text-on-tertiary-container py-3 focus:border-primary transition-all" name="category">
+<select class="w-full bg-transparent border-0 border-b border-outline-variant/30 font-body-lg text-body-lg text-on-tertiary-container py-3 focus:border-primary transition-all" id="formCategory" name="category">
 <option value="poem">Poem</option>
-<option value="story">Story</option>
-<option value="novel">Novel</option>
-<option value="essay">Essay</option>
+<option value="story">Short Story</option>
+<option value="novel">Grand Novel</option>
 </select>
 </div>
 </div>
@@ -204,7 +205,7 @@
 <button class="hover:text-primary transition-colors" type="button">QUOTE</button>
 </div>
 </div>
-<textarea class="w-full bg-transparent border-0 border-b border-outline-variant/10 font-body-lg text-body-lg text-on-tertiary-container leading-relaxed resize-none focus:border-primary transition-all scrollbar-hide" name="content" placeholder="Pour your thoughts onto the parchment..." rows="12"></textarea>
+<textarea class="w-full bg-transparent border-0 border-b border-outline-variant/10 font-body-lg text-body-lg text-on-tertiary-container leading-relaxed resize-none focus:border-primary transition-all scrollbar-hide" id="formContent" name="content" placeholder="Pour your thoughts onto the parchment..." required="" rows="12"></textarea>
 </div>
 <!-- Tags & Date Logic -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
@@ -212,7 +213,7 @@
 <label class="font-label-sm text-[10px] uppercase tracking-widest opacity-60 block mb-2">Lexical Tags</label>
 <div class="flex items-center gap-2 border-b border-outline-variant/30 py-2">
 <span class="material-symbols-outlined text-sm opacity-40">label</span>
-<input class="flex-grow bg-transparent border-none p-0 text-body-md focus:ring-0 placeholder:text-on-tertiary-container/30" placeholder="celestial, longing, midnight..." type="text"/>
+<input class="flex-grow bg-transparent border-none p-0 text-body-md focus:ring-0 placeholder:text-on-tertiary-container/30" id="formTags" placeholder="celestial, longing, midnight..." type="text"/>
 </div>
 </div>
 <div class="space-y-6">
@@ -230,26 +231,43 @@
 <div class="hidden animate-pulse" id="agelessEcho">
 <p class="font-label-sm text-[10px] text-primary flex items-center gap-2 tracking-widest">
 <span class="material-symbols-outlined text-sm">all_inclusive</span>
-                                    MARKED AS AGELESS ECHO
-                                </p>
+                                MARKED AS AGELESS ECHO
+                            </p>
 </div>
 </div>
 </div>
 <!-- Action Buttons -->
-<div class="flex flex-col md:flex-row items-center justify-end gap-6 pt-12"><button class="w-full md:w-auto px-8 py-4 border border-outline-variant/40 text-on-tertiary-container font-label-sm uppercase tracking-widest hover:bg-primary/10 transition-all duration-300 rounded" onclick="previewManuscript()" type="button">
-                            Preview Draft
-                        </button>
-<button class="w-full md:w-auto px-12 py-4 bg-primary-container text-on-primary-container font-label-sm uppercase tracking-[0.2em] font-bold shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all duration-500 rounded flex items-center justify-center gap-3" onclick="sealAndArchive()" type="button">
+<div class="flex flex-col md:flex-row items-center justify-end gap-6 pt-12">
+<button class="w-full md:w-auto px-8 py-4 border border-outline-variant/40 text-on-tertiary-container font-label-sm uppercase tracking-widest hover:bg-primary/10 transition-all duration-300 rounded" onclick="previewManuscript()" type="button">
+                        Preview Draft
+                    </button>
+<button class="w-full md:w-auto px-12 py-4 bg-primary-container text-on-primary-container font-label-sm uppercase tracking-[0.2em] font-bold shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all duration-500 rounded flex items-center justify-center gap-3" id="submitBtn" type="submit">
 <span class="material-symbols-outlined">verified</span>
-                            Seal and Archive
-                        </button></div>
-</form>
-</div><div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"><div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4"><span class="material-symbols-outlined text-secondary">verified_user</span><h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Ink Integrity</h3><p class="font-body-md text-on-surface-variant text-sm">Every stroke is cryptographically sealed to ensure the provenance of your creative soul.</p></div><div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4"><span class="material-symbols-outlined text-secondary">online_prediction</span><h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Echo System</h3><p class="font-body-md text-on-surface-variant text-sm">Your words resonate through the archive, connecting with scholars across the temporal divide.</p></div><div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4"><span class="material-symbols-outlined text-secondary">history_edu</span><h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Scholar's Bond</h3><p class="font-body-md text-on-surface-variant text-sm">A permanent record of your contribution to the collective consciousness of Aeon.</p></div></div>
-<!-- Decorative Cards -->
+                        Seal and Archive
+                    </button>
 </div>
-</main>
+</form>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+<div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+<h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Ink Integrity</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Every stroke is cryptographically sealed to ensure the provenance of your creative soul.</p>
+</div>
+<div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4">
+<span class="material-symbols-outlined text-secondary">online_prediction</span>
+<h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Echo System</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Your words resonate through the archive, connecting with scholars across the temporal divide.</p>
+</div>
+<div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4">
+<span class="material-symbols-outlined text-secondary">history_edu</span>
+<h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Scholar's Bond</h3>
+<p class="font-body-md text-on-surface-variant text-sm">A permanent record of your contribution to the collective consciousness of Aeon.</p>
+</div>
+</div>
+</div>
 <!-- Footer -->
-<footer class="w-full py-16 mt-auto bg-surface-container-lowest border-t border-outline/5 flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop text-center">
+<footer class="w-full py-16 mt-16 bg-transparent border-t border-outline/5 flex flex-col items-center gap-8 text-center">
 <div class="flex gap-12 font-sans font-medium text-on-surface-variant text-sm tracking-wide">
 <a class="hover:text-primary transition-all duration-500" href="#">The Inkwell</a>
 <a class="hover:text-primary transition-all duration-500" href="#">Celestial Terms</a>
@@ -262,59 +280,86 @@
 <span class="material-symbols-outlined text-xl">air</span>
 </div>
 </footer>
-<script>
-        // Toggle Logic for Timeless Entry
-        const toggle = document.getElementById('timelessToggle');
-        const dateWrapper = document.getElementById('dateFieldWrapper');
-        const agelessEcho = document.getElementById('agelessEcho');
-        const dateInput = document.getElementById('manuscriptDate');
-
-        toggle.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                dateWrapper.classList.add('opacity-10', 'pointer-events-none');
-                agelessEcho.classList.remove('hidden');
-                dateInput.value = '';
-            } else {
-                dateWrapper.classList.remove('opacity-10', 'pointer-events-none');
-                agelessEcho.classList.add('hidden');
-            }
-        });
-
-        // Form Submission Logic
-        const form = document.getElementById('submissionForm');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalContent = btn.innerHTML;
-            
-            btn.disabled = true;
-            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">history_edu</span> SEALING...`;
-            
-            setTimeout(() => {
-                btn.innerHTML = `<span class="material-symbols-outlined">auto_awesome</span> ARCHIVED`;
-                btn.classList.add('bg-primary', 'text-on-primary');
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalContent;
-                    btn.classList.remove('bg-primary', 'text-on-primary');
-                    btn.disabled = false;
-                    form.reset();
-                    dateWrapper.classList.remove('opacity-10', 'pointer-events-none');
-                    agelessEcho.classList.add('hidden');
-                }, 3000);
-            }, 1800);
-        });
-
-        // Nav Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('header');
-            if (window.scrollY > 20) {
-                nav.classList.add('py-3', 'shadow-2xl');
-                nav.classList.remove('py-4');
-            } else {
-                nav.classList.remove('py-3', 'shadow-2xl');
-                nav.classList.add('py-4');
-            }
-        });
-    </script>
-<div class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-12 bg-surface/95 backdrop-blur-xl" id="previewModal"><div class="max-w-4xl w-full h-full overflow-y-auto manuscript-paper p-8 md:p-16 rounded shadow-2xl relative"><button class="absolute top-8 right-8 text-on-tertiary-container hover:text-primary transition-colors" id="closePreview"><span class="material-symbols-outlined text-3xl">close</span></button><div class="space-y-8"><div class="text-center border-b border-outline-variant/20 pb-8"><h2 class="font-display-lg text-4xl text-on-tertiary-container mb-2" id="previewTitle"></h2><p class="font-label-sm text-xs uppercase tracking-widest opacity-60" id="previewCategory"></p></div><div class="font-body-lg text-on-tertiary-container leading-relaxed whitespace-pre-wrap" id="previewBody"></div><div class="pt-12 flex justify-center"><button class="px-12 py-4 bg-primary-container text-on-primary-container font-label-sm uppercase tracking-[0.2em] font-bold shadow-2xl rounded flex items-center gap-3" id="modalSeal"><span class="material-symbols-outlined">verified</span> SEAL FROM PREVIEW</button></div></div></div></div><div class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-surface/90 backdrop-blur-md" id="successOverlay"><div class="text-center space-y-6 p-12 border border-primary/20 bg-surface-container-low rounded-xl shadow-2xl"><span class="material-symbols-outlined text-primary text-7xl animate-pulse">auto_awesome</span><h2 class="font-display-lg text-3xl text-primary">Manuscript Archived</h2><p class="font-body-md text-on-surface/80">Your ink has been preserved in the celestial vaults.</p><div class="flex flex-col gap-4 pt-4"><a class="px-8 py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest font-bold rounded hover:scale-105 transition-transform" href="dashboard.html">View in Master Ledger</a><button class="text-on-surface/40 hover:text-on-surface text-xs uppercase tracking-widest" id="closeSuccess">Return to Suite</button></div></div></div></body></html>
+</main>
+<!-- Manuscript Manager Slide-over -->
+<div class="fixed inset-0 z-[100] hidden overflow-hidden" id="managerPanel">
+<div class="absolute inset-0 bg-surface/60 backdrop-blur-sm" onclick="closeManager()"></div>
+<div class="absolute right-0 top-0 h-full w-full max-w-xl bg-surface-container border-l border-outline/10 shadow-2xl flex flex-col translate-x-full transition-transform duration-500 ease-in-out" id="panelContent">
+<div class="p-8 border-b border-outline/10 flex justify-between items-center">
+<div>
+<h2 class="font-display-lg text-2xl text-primary mb-1">Master Ledger</h2>
+<p class="font-label-sm text-[10px] text-outline uppercase tracking-widest">Managing Temporal Manuscripts</p>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" onclick="closeManager()">close</button>
+</div>
+<div class="flex-grow overflow-y-auto p-8 scrollbar-hide space-y-12">
+<!-- Category: Poems -->
+<section>
+<div class="flex items-center gap-4 mb-6">
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+<h3 class="font-label-sm text-xs text-primary uppercase tracking-[0.3em]">Poems</h3>
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+</div>
+<div class="space-y-4" id="poemsList">
+<p class="text-on-surface-variant/40 italic text-sm text-center">No poems found in the archive.</p>
+</div>
+</section>
+<!-- Category: Short Stories -->
+<section>
+<div class="flex items-center gap-4 mb-6">
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+<h3 class="font-label-sm text-xs text-primary uppercase tracking-[0.3em]">Short Stories</h3>
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+</div>
+<div class="space-y-4" id="storiesList">
+<p class="text-on-surface-variant/40 italic text-sm text-center">The short story ledger is empty.</p>
+</div>
+</section>
+<!-- Category: Grand Novels -->
+<section>
+<div class="flex items-center gap-4 mb-6">
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+<h3 class="font-label-sm text-xs text-primary uppercase tracking-[0.3em]">Grand Novels</h3>
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+</div>
+<div class="space-y-4" id="novelsList">
+<p class="text-on-surface-variant/40 italic text-sm text-center">No grand novels have been sealed yet.</p>
+</div>
+</section>
+</div>
+<div class="p-8 border-t border-outline/10 bg-surface-container-low">
+<button class="w-full py-3 border border-outline/20 text-on-surface hover:border-primary/40 hover:text-primary transition-all rounded font-label-sm uppercase tracking-widest text-xs" onclick="closeManager()">
+                Continue Curating
+            </button>
+</div>
+</div>
+</div>
+<!-- Preview Modal -->
+<div class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4 md:p-12 bg-surface/95 backdrop-blur-xl" id="previewModal">
+<div class="max-w-4xl w-full h-full overflow-y-auto manuscript-paper p-8 md:p-16 rounded shadow-2xl relative">
+<button class="absolute top-8 right-8 text-on-tertiary-container hover:text-primary transition-colors" onclick="document.getElementById('previewModal').classList.add('hidden')">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+<div class="space-y-8">
+<div class="text-center border-b border-outline-variant/20 pb-8">
+<h2 class="font-display-lg text-4xl text-on-tertiary-container mb-2" id="previewTitle"></h2>
+<p class="font-label-sm text-xs uppercase tracking-widest opacity-60" id="previewCategory"></p>
+</div>
+<div class="font-body-lg text-on-tertiary-container leading-relaxed whitespace-pre-wrap" id="previewBody"></div>
+<div class="pt-12 flex justify-center">
+<button class="px-12 py-4 bg-primary-container text-on-primary-container font-label-sm uppercase tracking-[0.2em] font-bold shadow-2xl rounded flex items-center gap-3" id="modalSeal">
+<span class="material-symbols-outlined">verified</span> SEAL FROM PREVIEW
+                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Success Overlay -->
+<div class="fixed inset-0 z-[130] hidden flex items-center justify-center bg-surface/90 backdrop-blur-md" id="successOverlay">
+<div class="text-center space-y-6 p-12 border border-primary/20 bg-surface-container-low rounded-xl shadow-2xl">
+<span class="material-symbols-outlined text-primary text-7xl animate-pulse">auto_awesome</span>
+<h2 class="font-display-lg text-3xl text-primary">Manuscript Archived</h2>
+<p class="font-body-md text-on-surface/80">Your ink has been preserved in the celestial vaults.</p>
+<div class="flex flex-col gap-4 pt-4">
+<button class="px-8 py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest font-bold rounded hover:scale-105 transition-transform" onclick="openManager(); document.getElementById('successOverlay').classList.add('hidden')">View in Master Ledger</button>
+<button class="text-on-surface/40 hover:text-on-surface text-xs uppercase tracking-widest" onclick="document.getElementById('successOverlay').classList.add('hidden')">Return to Suite</b
