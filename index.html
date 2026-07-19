@@ -23,7 +23,7 @@
             -webkit-font-feature-settings: 'liga';
             -webkit-font-smoothing: antialiased;
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            /* Prevents layout shift and "flash of unstyled text" by hiding text content until font loads */
+            /* Force icons to render by ensuring font-family priority and display */
             font-display: block;
         }
         
@@ -213,7 +213,7 @@
 </div>
 <span class="material-symbols-outlined">arrow_forward</span>
 </a>
-<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html">
+<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html#poems">
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined">ink_pen</span>
 <span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Poem Archive</span>
@@ -276,7 +276,13 @@
 <span class="material-symbols-outlined text-secondary">architecture</span>
 <h3 class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Reading Suite</h3>
 </div>
-<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="reading-suite.html"><div class="flex items-center gap-4"><span class="material-symbols-outlined">menu_book</span><span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Go to Reading Suite</span></div><span class="material-symbols-outlined">arrow_forward</span></a>
+<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="reading-suite.html">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Go to Reading Suite</span>
+</div>
+<span class="material-symbols-outlined">arrow_forward</span>
+</a>
 </section>
 <!-- Footer -->
 <footer class="w-full pb-32 pt-8 border-t border-outline-variant/10 flex flex-col items-center gap-4 px-margin-mobile">
@@ -298,7 +304,7 @@
 <span class="material-symbols-outlined">library_books</span>
 <span class="font-label-sm text-[10px] mt-1">Archive</span>
 </a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="login.html">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="submit.html">
 <span class="material-symbols-outlined">edit_note</span>
 <span class="font-label-sm text-[10px] mt-1">Write</span>
 </a>
@@ -310,16 +316,4 @@
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
     </script>
-<script>
-function toggleTheme() {
-    const html = document.documentElement;
-    const icon = document.querySelector('header button:last-child span');
-    if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        icon.textContent = 'dark_mode';
-    } else {
-        html.classList.add('dark');
-        icon.textContent = 'light_mode';
-    }
-}
-</script></body></html>
+</body></html>
