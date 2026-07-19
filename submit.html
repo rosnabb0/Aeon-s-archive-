@@ -357,3 +357,123 @@
 <div class="text-center space-y-6 p-12 border border-primary/20 bg-surface-container-low rounded-xl shadow-2xl">
 <span class="material-symbols-outlined text-primary text-7xl animate-pulse">auto_awesome</span>
 <h2 class="font-display-lg text-3xl text-primary">Manuscript Archived</h2>
+<p class="font-body-md text-on-surface/80">
+    Your ink has been preserved in the celestial vaults.
+</p>
+<div class="flex flex-col gap-4 pt-4">
+    <button class="px-8 py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest font-bold rounded hover:scale-105 transition-transform"
+        onclick="openManager(); document.getElementById('successOverlay').classList.add('hidden')">
+        View in Master Ledger
+    </button>
+
+    <button class="text-on-surface/40 hover:text-on-surface text-xs uppercase tracking-widest"
+        onclick="document.getElementById('successOverlay').classList.add('hidden')">
+        Return to Suite
+    </button>
+</div>
+</div>
+</div>
+
+<script>
+    // Manager Panel Logic
+    function openManager() {
+        const panel = document.getElementById('managerPanel');
+        const content = document.getElementById('panelContent');
+
+        panel.classList.remove('hidden');
+        setTimeout(() => content.classList.remove('translate-x-full'), 10);
+        renderLedger();
+    }
+
+    function closeManager() {
+        const content = document.getElementById('panelContent');
+
+        content.classList.add('translate-x-full');
+        setTimeout(() => {
+            document.getElementById('managerPanel').classList.add('hidden');
+        }, 500);
+    }
+
+    // Storage Logic
+    function saveManuscript(data) {
+        const stored =
+            JSON.parse(localStorage.getItem('aeon_manuscripts') || '[]');
+
+        stored.push({
+            id: Date.now(),
+            ...data,
+            timestamp: new Date().toLocaleDateString()
+        });
+
+        localStorage.setItem(
+            'aeon_manuscripts',
+            JSON.stringify(stored)
+        );
+    }
+
+    function deleteManuscript(id) {
+        let stored =
+            JSON.parse(localStorage.getItem('aeon_manuscripts') || '[]');
+
+        stored = stored.filter(m => m.id !== id);
+
+        localStorage.setItem(
+            'aeon_manuscripts',
+            JSON.stringify(stored)
+        );
+
+        renderLedger();
+    }
+
+    function renderLedger() {
+        const stored =
+            JSON.parse(localStorage.getItem('aeon_manuscripts') || '[]');
+
+        const containers = {
+            poem: document.getElementById('poemsList'),
+            story: document.getElementById('storiesList'),
+            novel: document.getElementById('novelsList')
+        };
+
+        Object.keys(containers).forEach(key => {
+            containers[key].innerHTML =
+                `<p class="text-on-surface-variant/40 italic text-sm text-center">
+                    Empty in the archive.
+                </p>`;
+        });
+
+        const groups = stored.reduce((acc, item) => {
+            if (!acc[item.category]) acc[item.category] = [];
+            acc[item.category].push(item);
+            return acc;
+        }, {});
+
+        Object.keys(groups).forEach(cat => {
+            if (containers[cat]) {
+                containers[cat].innerHTML =
+                    groups[cat].map(m => `
+                    <div class="bg-surface-container-high p-4 rounded border border-outline/5 hover:border-primary/20 transition-all flex justify-between items-center group/item">
+                        <div class="overflow-hidden">
+                            <h4 class="text-on-surface font-body-lg truncate pr-4">
+                                ${m.title}
+                            </h4>
+
+                            <div class="flex gap-3 text-[10px] font-label-sm uppercase tracking-widest text-on-surface-variant opacity-60">
+                                <span>${m.timestamp}</span>
+                                <span>•</span>
+                                <span class="text-primary/70">
+                                    ${m.tags || 'no tags'}
+                                </span>
+                            </div>
+                        </div>
+
+                        <button
+                            onclick="deleteManuscript(${m.id})"
+                            class="opacity-0 group-hover/item:opacity-100 text-error hover:text-on-error hover:bg-error/10 p-2 rounded transition-all material-symbols-outlined text-sm">
+                            delete_forever
+                        </button>
+                    </div>
+                `).join('');
+            }
+        });
+    }
