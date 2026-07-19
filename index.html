@@ -6,8 +6,6 @@
 <title>Aeon's Archive - Sanctum of the Eternal Dreamer</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&amp;family=Literata:opsz,wght@7-72,400;7-72,700&amp;family=Space+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@100..900&amp;family=Literata:wght@100..900&amp;family=Space+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -146,26 +144,37 @@
         }
     </script>
 <style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        /* Simple light mode override logic */
+        body.light {
+            background: #fdf6e3 !important;
+            color: #071325 !important;
+        }
+        body.light .swirl-bg {
+            background: radial-gradient(circle at 50% 50%, #fdf6e3 0%, #e9e0c8 100%);
+        }
+        body.light .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-<body class="bg-background text-on-background selection:bg-secondary/30">
+<body class="bg-background text-on-background selection:bg-secondary/30 transition-colors duration-500">
 <!-- Top AppBar -->
-<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/20 shadow-sm flex items-center justify-between px-margin-mobile h-16 w-full">
-<button class="text-secondary active:scale-95 duration-200 hover:opacity-80 transition-opacity">
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/20 shadow-sm flex items-center justify-between px-margin-mobile h-16">
+<button class="text-secondary active:scale-95 duration-200 hover:opacity-80 transition-opacity cursor-pointer">
 <span class="material-symbols-outlined" data-icon="menu">menu</span>
 </button>
 <a href="index.html"><h1 class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-secondary dark:text-secondary-fixed">AEON'S ARCHIVE</h1></a>
-<button class="text-secondary active:scale-95 duration-200 hover:opacity-80 transition-opacity">
+<button class="text-secondary active:scale-95 duration-200 hover:text-primary transition-all cursor-pointer" id="theme-toggle">
 <span class="material-symbols-outlined" data-icon="light_mode">light_mode</span>
 </button>
 </header>
 <main class="pt-24 pb-32 px-margin-mobile swirl-bg min-h-screen relative">
 <!-- Animated Background Component -->
-<div class="absolute inset-0 pointer-events-none opacity-40">
-</div>
+<div class="absolute inset-0 pointer-events-none opacity-40"></div>
 <!-- Vertical Anchor Mark -->
 <div class="fixed right-2 top-1/2 -translate-y-1/2 z-10 hidden md:block">
 <span class="aeon-anchor font-label-sm text-label-sm text-outline tracking-widest opacity-40">EST 2026</span>
@@ -180,8 +189,20 @@
 </section>
 <!-- Primary Actions -->
 <section class="grid grid-cols-1 gap-4 mb-12 relative z-10">
-<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="archive.html"><div class="flex items-center gap-4"><span class="material-symbols-outlined" data-icon="library_books">library_books</span><span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">The Eternal Library</span></div><span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span></a>
-<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html"><div class="flex items-center gap-4"><span class="material-symbols-outlined" data-icon="ink_pen">ink_pen</span><span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Poem Archive</span></div><span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span></a>
+<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="archive.html">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">The Eternal Library</span>
+</div>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined" data-icon="ink_pen">ink_pen</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Poem Archive</span>
+</div>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
 </section>
 <!-- Editor's Note -->
 <section class="mb-12 relative z-10">
@@ -206,30 +227,30 @@
 </div>
 <div class="grid grid-cols-2 gap-4">
 <!-- Novels: Large Card -->
-<div class="col-span-2 h-48 rounded-xl relative overflow-hidden group">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A lush, oil painting-style landscape inspired by Van Gogh, featuring a grand, ancient library built into the side of a cliff under a swirling, indigo night sky filled with luminous stars. The brushstrokes are thick and expressive, with deep blues, ochres, and golden yellows. The mood is scholarly, mysterious, and grand." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAiWUDPn7uCfIkqmP53lRC9LMEfYpEEI0M8AiH7Sk-OtTFWXoMdHVuIq0Bul7SXTQ696ZG79wNAibeBFOggUhg5vXhi9fkEmc1Nk-JGhk6fQ7ZkKwSw6uU8P1HRoM0uQsVWe_LWh5kLi3iDlLLVHSnThsy67xIeVz8m4xIJEgFIgw5aFAOsXFtNYjOzwdw4Xo_SR-0YmrIDiRYz38jX9qS3-tr4oCzNSMzGOh7byc2uVdfkq9onVY9KTQhTeZCOAR9MK-_DCT9j6Y0')"></div>
+<a class="col-span-2 h-48 rounded-xl relative overflow-hidden group block cursor-pointer" href="archive.html">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAiWUDPn7uCfIkqmP53lRC9LMEfYpEEI0M8AiH7Sk-OtTFWXoMdHVuIq0Bul7SXTQ696ZG79wNAibeBFOggUhg5vXhi9fkEmc1Nk-JGhk6fQ7ZkKwSw6uU8P1HRoM0uQsVWe_LWh5kLi3iDlLLVHSnThsy67xIeVz8m4xIJEgFIgw5aFAOsXFtNYjOzwdw4Xo_SR-0YmrIDiRYz38jX9qS3-tr4oCzNSMzGOh7byc2uVdfkq9onVY9KTQhTeZCOAR9MK-_DCT9j6Y0')"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
 <div class="absolute bottom-4 left-4">
 <span class="font-label-sm text-label-sm text-secondary mb-1 block">TOME I</span>
 <h4 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Novels</h4>
 </div>
-</div>
+</a>
 <!-- Short Stories -->
-<div class="h-40 rounded-xl relative overflow-hidden group">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A detailed, macro painting of an open, ancient manuscript with ink-stained pages, illuminated by a warm, single candle flame. Swirls of dark blue and starry yellow light dance across the edges of the page, mimicking the post-impressionist style of Starry Night. The atmosphere is quiet, intimate, and deeply focused on literary creation." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTgOdfXvNLsks5rba1X6djG7TWnkmOHY4SGGmtZzkl-7yjQaPw3lYlHyC08gZPt8IvVuf_CH4p7oiNK6tPopmtnao7IDsfggNU13wHivSoeWcjUXcuWBZw-TejCBEXa3bDkxX3JdNRxsjj4zpp8DvLi91p7cr3WrWDKrjfMCDx5Bptu2dTD_v2YfJYZckZ-jwx65JzeJBk7hrypSLyTRpbOIPaBSlzPsjb_S3pGlvxQzr3Fcet9EPtTTftjgHWBlRRIFqkkCuYlXE')"></div>
+<a class="h-40 rounded-xl relative overflow-hidden group block cursor-pointer" href="archive.html">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTgOdfXvNLsks5rba1X6djG7TWnkmOHY4SGGmtZzkl-7yjQaPw3lYlHyC08gZPt8IvVuf_CH4p7oiNK6tPopmtnao7IDsfggNU13wHivSoeWcjUXcuWBZw-TejCBEXa3bDkxX3JdNRxsjj4zpp8DvLi91p7cr3WrWDKrjfMCDx5Bptu2dTD_v2YfJYZckZ-jwx65JzeJBk7hrypSLyTRpbOIPaBSlzPsjb_S3pGlvxQzr3Fcet9EPtTTftjgHWBlRRIFqkkCuYlXE')"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent opacity-80"></div>
 <div class="absolute bottom-4 left-4">
 <h4 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Short Stories</h4>
 </div>
-</div>
+</a>
 <!-- Poetry -->
-<div class="h-40 rounded-xl relative overflow-hidden group">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A dreamlike, expressive painting of a field of sunflowers under a swirling blue sky, where the sunflowers transition into quills or feathers. The colors are dominated by intense yellows and deep cobalt blues, with thick, textured brushwork typical of a post-impressionist masterpiece. The mood is artistic, poetic, and vibrant." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNo_qHB10M2JZyn_DqOJED5NUs6zGNoLSIXGKAOByLjrdU5D4Cb6Harei3uRnefDsJolxIHGxELZmBBjHqBVMiuFpNHfRIqfqICEz36zqS7czpuf-_PkTPkipTWEuPTM6QguAjB7aixAfmpCCAdt6sR3eevnQX69jWlxThDbCc6w8vwh-IgvVHje2P-YB1rt2SVykjlOGqtp8rfJVpbA9a-G_Om2-sT2scpNXwptPg8PKyPIxEGOcE7lH00n58X5TLDWYsAXzi9R0')"></div>
+<a class="h-40 rounded-xl relative overflow-hidden group block cursor-pointer" href="archive.html">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNo_qHB10M2JZyn_DqOJED5NUs6zGNoLSIXGKAOByLjrdU5D4Cb6Harei3uRnefDsJolxIHGxELZmBBjHqBVMiuFpNHfRIqfqICEz36zqS7czpuf-_PkTPkipTWEuPTM6QguAjB7aixAfmpCCAdt6sR3eevnQX69jWlxThDbCc6w8vwh-IgvVHje2P-YB1rt2SVykjlOGqtp8rfJVpbA9a-G_Om2-sT2scpNXwptPg8PKyPIxEGOcE7lH00n58X5TLDWYsAXzi9R0')"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent opacity-80"></div>
 <div class="absolute bottom-4 left-4">
 <h4 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Poetry</h4>
 </div>
-</div>
+</a>
 </div>
 </section>
 <!-- Reading Suite -->
@@ -239,30 +260,30 @@
 <h3 class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Reading Suite</h3>
 </div>
 <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-<div class="flex-shrink-0 flex flex-col items-center gap-2">
-<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed hover:bg-secondary hover:text-on-secondary transition-colors cursor-pointer">
+<a class="flex-shrink-0 flex flex-col items-center gap-2 group cursor-pointer" href="reading-suite.html">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed group-hover:bg-secondary group-hover:text-on-secondary group-active:scale-90 transition-all">
 <span class="material-symbols-outlined" data-icon="translate">translate</span>
 </div>
-<span class="font-label-sm text-[10px] text-outline">LEXICON</span>
-</div>
-<div class="flex-shrink-0 flex flex-col items-center gap-2">
-<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed hover:bg-secondary hover:text-on-secondary transition-colors cursor-pointer">
+<span class="font-label-sm text-[10px] text-outline group-hover:text-secondary transition-colors">LEXICON</span>
+</a>
+<a class="flex-shrink-0 flex flex-col items-center gap-2 group cursor-pointer" href="reading-suite.html">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed group-hover:bg-secondary group-hover:text-on-secondary group-active:scale-90 transition-all">
 <span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
 </div>
-<span class="font-label-sm text-[10px] text-outline">ANNOTATE</span>
-</div>
-<div class="flex-shrink-0 flex flex-col items-center gap-2">
-<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed hover:bg-secondary hover:text-on-secondary transition-colors cursor-pointer">
+<span class="font-label-sm text-[10px] text-outline group-hover:text-secondary transition-colors">ANNOTATE</span>
+</a>
+<a class="flex-shrink-0 flex flex-col items-center gap-2 group cursor-pointer" href="reading-suite.html">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed group-hover:bg-secondary group-hover:text-on-secondary group-active:scale-90 transition-all">
 <span class="material-symbols-outlined" data-icon="bookmarks">bookmarks</span>
 </div>
-<span class="font-label-sm text-[10px] text-outline">COLLECT</span>
-</div>
-<div class="flex-shrink-0 flex flex-col items-center gap-2">
-<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed hover:bg-secondary hover:text-on-secondary transition-colors cursor-pointer">
+<span class="font-label-sm text-[10px] text-outline group-hover:text-secondary transition-colors">COLLECT</span>
+</a>
+<a class="flex-shrink-0 flex flex-col items-center gap-2 group cursor-pointer" href="reading-suite.html">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed group-hover:bg-secondary group-hover:text-on-secondary group-active:scale-90 transition-all">
 <span class="material-symbols-outlined" data-icon="share">share</span>
 </div>
-<span class="font-label-sm text-[10px] text-outline">TRANSCRIBE</span>
-</div>
+<span class="font-label-sm text-[10px] text-outline group-hover:text-secondary transition-colors">TRANSCRIBE</span>
+</a>
 </div>
 </section>
 <!-- Footer -->
@@ -277,7 +298,7 @@
 </main>
 <!-- Bottom Navigation Bar -->
 <nav class="fixed bottom-0 w-full rounded-t-full z-50 bg-surface-container/90 dark:bg-surface-container/90 backdrop-blur-2xl border-t border-outline-variant/10 shadow-[0_-4px_20px_rgba(233,195,58,0.05)] flex justify-around items-center h-20 px-4 pb-2">
-<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="index.html">
+<a class="flex flex-col items-center justify-center bg-secondary text-on-secondary rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="index.html">
 <span class="material-symbols-outlined" data-icon="home">home</span>
 <span class="font-label-sm text-label-sm mt-0.5">Home</span>
 </a>
@@ -289,7 +310,7 @@
 <span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
 <span class="font-label-sm text-label-sm">Write</span>
 </a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150" href="login.html">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150" href="dashboard.html">
 <span class="material-symbols-outlined" data-icon="person">person</span>
 <span class="font-label-sm text-label-sm">Profile</span>
 </a>
@@ -307,11 +328,39 @@
             });
         }
 
-        // Handle Active State Logic for Navigation
+        // Theme Toggle Interaction
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const icon = themeBtn.querySelector('.material-symbols-outlined');
+            if (document.body.classList.contains('light')) {
+                icon.textContent = 'dark_mode';
+                document.documentElement.classList.remove('dark');
+            } else {
+                icon.textContent = 'light_mode';
+                document.documentElement.classList.add('dark');
+            }
+        });
+
+        // Simplified active state logic for navigation highlighting (since these link to new pages in real app)
         const navItems = document.querySelectorAll('nav a');
         navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
+            item.addEventListener('click', () => {
                 navItems.forEach(nav => {
-                    nav.className = "flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors active:scale-90 duration-150";
-                });
-                item.className = "flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 active:scale-90 transition
+                    nav.classList.remove('bg-secondary', 'text-on-secondary', 'rounded-full', 'px-4', 'py-1');
+                        nav.classList.add ('text-on-surface-variant');
+
+});
+
+nav.classList.rem
+
+item.classList.add('b g-secondary', 'text-on-secondary', 'rounded-full', 'px-4', 'py-1');
+
+item.classList.remove ('text-on-surface-variant');
+
+});
+
+});
+
+</script>
+</body></html>
