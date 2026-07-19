@@ -155,7 +155,12 @@
 </div>
 <!-- Header Branding -->
 <header class="fixed top-0 w-full flex items-center justify-between px-margin-mobile md:px-margin-desktop h-20 z-50">
-<a class="flex items-center gap-3 hover:opacity-80 transition-opacity" href="index.html"><span class="material-symbols-outlined text-secondary text-3xl">auto_awesome</span><h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg tracking-tighter text-secondary">AEON'S ARCHIVE</h1></a>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl">auto_awesome</span>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg tracking-tighter text-secondary">
+                AEON'S ARCHIVE
+            </h1>
+</div>
 <div class="font-label-sm text-label-sm text-outline hidden md:block">
             CURATOR'S SUITE ACCESS
         </div>
@@ -175,7 +180,7 @@
 <section class="glass-card rounded-xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
 <!-- Subtle Canvas Texture Overlay -->
 <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/canvas-orange.png');"></div>
-<form action="otp-verify.html" class="space-y-6 relative z-10">
+<form class="space-y-6 relative z-10" onsubmit="event.preventDefault(); window.location.href='otp-verify.html';">
 <!-- Username Field -->
 <div class="space-y-2">
 <label class="font-label-sm text-label-sm text-secondary block uppercase tracking-widest" for="username">
@@ -218,7 +223,7 @@
 </main>
 <!-- Footer Links -->
 <footer class="fixed bottom-0 w-full py-8 flex flex-col items-center gap-4 z-50">
-<a class="group flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors" href="index.html">
+<a class="group flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors" href="#">
 <span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
 <span class="font-label-sm text-label-sm">Back to Archive</span>
 </a>
