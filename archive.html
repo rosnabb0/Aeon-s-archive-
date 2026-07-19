@@ -385,4 +385,25 @@
                             <div class="flex items-center justify-between">
                                 <span class="text-[10px] font-label-sm text-outline/60">${m.date || 'Unknown Era'}</span>
                                 <span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all">arrow_forward</span>
+                                                    </div>
+                </div>
+            </a>
+        `).join('');
+
+        grid.innerHTML = manuscriptHtml;
+        grid.classList.remove('grid-cols-1');
+        grid.classList.add('md:grid-cols-3');
+    }
+});
+
+}
+
+// Run on load
+window.addEventListener(
+    'DOMContentLoaded',
+    renderManuscripts
+);
+</script>
+</body>
+</html>
            
