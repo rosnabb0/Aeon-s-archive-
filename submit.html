@@ -477,3 +477,230 @@
             }
         });
     }
+// Toggle Logic for Timeless Entry
+const toggle = document.getElementById('timelessToggle');
+const dateWrapper = document.getElementById('dateFieldWrapper');
+const agelessEcho = document.getElementById('agelessEcho');
+const dateInput = document.getElementById('manuscriptDate');
+
+toggle.addEventListener('change', (e) => {
+    if (e.target.checked) {
+        dateWrapper.classList.add(
+            'opacity-10',
+            'pointer-events-none'
+        );
+        agelessEcho.classList.remove('hidden');
+        dateInput.value = '';
+    } else {
+        dateWrapper.classList.remove(
+            'opacity-10',
+            'pointer-events-none'
+        );
+        agelessEcho.classList.add('hidden');
+    }
+});
+
+// Form Submission Logic
+const form = document.getElementById('submissionForm');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const btn = document.getElementById('submitBtn');
+    const originalContent = btn.innerHTML;
+
+    btn.disabled = true;
+    btn.innerHTML =
+        `<span class="material-symbols-outlined animate-spin">
+            history_edu
+        </span> SEALING...`;
+
+    const formData = {
+        title: document.getElementById('formTitle').value,
+        category: document.getElementById('formCategory').value,
+        content: document.getElementById('formContent').value,
+        tags: document.getElementById('formTags').value,
+        timeless: toggle.checked,
+        date: dateInput.value
+    };
+
+    setTimeout(() => {
+        saveManuscript(formData);
+
+        btn.innerHTML =
+            `<span class="material-symbols-outlined">
+                auto_awesome
+            </span> ARCHIVED`;
+
+        btn.classList.add(
+            'bg-primary',
+            'text-on-primary'
+        );
+
+        setTimeout(() => {
+            document.getElementById(
+                'successOverlay'
+            ).classList.remove('hidden');
+
+            btn.innerHTML = originalContent;
+            btn.classList.remove(
+                'bg-primary',
+                'text-on-primary'
+            );
+
+            btn.disabled = false;
+            form.reset();
+
+            dateWrapper.classList.remove(
+                'opacity-10',
+                'pointer-events-none'
+            );
+
+            agelessEcho.classList.add('hidden');
+        }, 800);
+
+    }, 1800);
+});
+
+// Preview Logic
+function previewManuscript() {
+    const title =
+        document.getElementById('formTitle').value
+        || "Untitled Whispers";
+
+    const category =
+        document.getElementById('formCategory')
+        .options[
+            document.getElementById('formCategory')
+            .selectedIndex
+        ].text;
+
+    const content =
+        document.getElementById('formContent').value
+        || "The parchment remains silent...";
+
+    document.getElementById('previewTitle').innerText =
+        title;
+
+    document.getElementById('previewCategory').innerText =
+        category;
+
+    document.getElementById('previewBody').innerText =
+        content;
+
+    document.getElementById('previewModal')
+        .classList.remove('hidden');
+}
+
+document.getElementById('modalSeal').onclick = () => {
+    document.getElementById('previewModal')
+        .classList.add('hidden');
+
+    document.getElementById('submissionForm')
+        .dispatchEvent(new Event('submit'));
+};
+</script>
+
+<div class="fixed inset-0 z-[200] hidden flex items-center justify-center bg-surface/90 backdrop-blur-md"
+     id="deleteConfirmModal">
+
+    <div class="bg-surface-container-low border border-primary/20 p-8 rounded-xl shadow-2xl max-w-sm w-full text-center space-y-6">
+
+        <span class="material-symbols-outlined text-error text-5xl">
+            warning
+        </span>
+
+        <h3 class="font-display-lg text-2xl text-on-surface">
+            Erase from History?
+        </h3>
+
+        <p class="font-body-md text-on-surface-variant">
+            This manuscript will be lost to the void forever.
+            Are you certain?
+        </p>
+
+        <div class="flex gap-4">
+            <button
+                id="cancelDelete"
+                class="flex-1 py-3 border border-outline/20 text-on-surface rounded font-label-sm uppercase tracking-widest text-xs hover:bg-surface-container">
+                Cancel
+            </button>
+
+            <button
+                id="confirmDelete"
+                class="flex-1 py-3 bg-error text-on-error rounded font-label-sm uppercase tracking-widest text-xs font-bold hover:scale-105 transition-transform">
+                Ok, Erase
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleSidebar() {
+    const sidebar =
+        document.getElementById('mainSidebar');
+
+    const main =
+        document.getElementById('mainContent');
+
+    const isCollapsed =
+        sidebar.classList.contains('-translate-x-full');
+
+    if (isCollapsed) {
+        sidebar.classList.remove('-translate-x-full');
+        main.classList.add('ml-64');
+        main.classList.remove('ml-0');
+    } else {
+        sidebar.classList.add('-translate-x-full');
+        main.classList.remove('ml-64');
+        main.classList.add('ml-0');
+    }
+}
+
+let manuscriptToDelete = null;
+
+function deleteManuscript(id) {
+    manuscriptToDelete = id;
+
+    document.getElementById(
+        'deleteConfirmModal'
+    ).classList.remove('hidden');
+}
+
+document.getElementById('cancelDelete').onclick = () => {
+    document.getElementById(
+        'deleteConfirmModal'
+    ).classList.add('hidden');
+
+    manuscriptToDelete = null;
+};
+
+document.getElementById('confirmDelete').onclick = () => {
+    if (manuscriptToDelete) {
+        let stored =
+            JSON.parse(
+                localStorage.getItem('aeon_manuscripts')
+                || '[]'
+            );
+
+        stored = stored.filter(
+            m => m.id !== manuscriptToDelete
+        );
+
+        localStorage.setItem(
+            'aeon_manuscripts',
+            JSON.stringify(stored)
+        );
+
+        renderLedger();
+
+        document.getElementById(
+            'deleteConfirmModal'
+        ).classList.add('hidden');
+
+        manuscriptToDelete = null;
+    }
+};
+</script>
+</body>
+</html>
