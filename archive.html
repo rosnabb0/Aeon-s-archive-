@@ -143,14 +143,14 @@
 <header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-outline/20 shadow-sm shadow-primary/10">
 <nav class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
 <div class="flex items-center gap-4">
-<span class="font-display-lg text-headline-md text-primary dark:text-primary tracking-tight font-headline-lg">Aeon's Archive</span>
+<a class="font-display-lg text-headline-md text-primary dark:text-primary tracking-tight font-headline-lg" href="index.html">Aeon's Archive</a>
 </div>
 <div class="hidden md:flex gap-8 items-center">
 <a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="#poems">Poems</a>
 <a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="#stories">Stories</a>
 <a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="#novels">Novels</a>
-</div>
-<div class="flex items-center gap-4">
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="chronicle.html">Chronicle</a></div>
+<div class="flex items-center gap-4"><a class="flex items-center gap-2 text-primary hover:text-secondary transition-colors font-label-sm text-label-sm uppercase tracking-widest" href="login.html"><span class="material-symbols-outlined">edit_note</span> Write</a>
 <button class="text-primary dark:text-primary-fixed-dim transition-all duration-500 ease-in-out hover:scale-110">
 <span class="material-symbols-outlined">light_mode</span>
 </button>
@@ -212,7 +212,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <!-- Empty State Placeholder -->
-<div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative w-full">
+<div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
 <span class="material-symbols-outlined text-4xl">ink_pen</span>
 </div>
@@ -232,7 +232,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 <!-- Empty State Placeholder -->
-<div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative w-full">
+<div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
 <span class="material-symbols-outlined text-4xl">history_edu</span>
 </div>
@@ -252,7 +252,7 @@
 </div>
 <div class="grid grid-cols-1 gap-8">
 <!-- Empty State Placeholder -->
-<div class="py-20 flex flex-col items-center text-center manuscript-empty-state relative bg-surface-container-low/30 rounded-2xl w-full">
+<div class="py-20 flex flex-col items-center text-center manuscript-empty-state relative bg-surface-container-low/30 rounded-2xl">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-secondary/10 border border-secondary/5">
 <span class="material-symbols-outlined text-4xl">book_2</span>
 </div>
@@ -266,14 +266,14 @@
 <!-- Footer Component -->
 <footer class="w-full py-12 mt-auto bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline/10">
 <div class="flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop text-center max-w-container-max mx-auto">
-<div class="font-display-lg text-primary font-headline-lg">Aeon's Archive</div>
+<a class="font-display-lg text-primary font-headline-lg" href="index.html">Aeon's Archive</a>
 <div class="flex flex-wrap justify-center gap-8">
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="#">The Inkwell</a>
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="#">Celestial Terms</a>
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="#">Library Map</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="archive.html">The Inkwell</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="archive.html">Celestial Terms</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="archive.html">Library Map</a>
 </div>
 <div class="font-body-md text-body-md text-on-surface-variant/60">
-                © 2026 Aeon's Archive. Curated for the Eternal Dreamer.
+                © 1892 Aeon's Archive. Curated for the Eternal Dreamer.
             </div>
 </div>
 </footer>
@@ -285,10 +285,7 @@
 <span class="font-label-sm text-label-sm text-secondary uppercase opacity-70">Scholarly Tools</span>
 </div>
 <div class="space-y-4">
-<button class="flex items-center gap-4 w-full p-4 bg-secondary-container text-on-secondary-container rounded-full scale-95 active:scale-90 transition-transform">
-<span class="material-symbols-outlined">arrow_back</span>
-<span class="font-body-lg text-body-lg">Return to Archive</span>
-</button>
+<a class="flex items-center gap-4 w-full p-4 bg-secondary-container text-on-secondary-container rounded-full scale-95 active:scale-90 transition-transform" href="archive.html"><span class="material-symbols-outlined">arrow_back</span><span class="font-body-lg text-body-lg">Return to Archive</span></a>
 <button class="flex items-center gap-4 w-full p-4 text-on-surface-variant hover:bg-surface-variant rounded-full scale-95 active:scale-90 transition-transform">
 <span class="material-symbols-outlined">menu_book</span>
 <span class="font-body-lg text-body-lg">Table of Contents</span>
