@@ -262,7 +262,8 @@
 <a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="terms.html">Celestial Terms</a>
 <a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="map.html">Library Map</a>
 </div>
-<div class="font-body-md text-body-md text-on-surface-variant/60">            © 2026 Aeon's Archive. Curated for the Eternal Dreamer.
+<div class="font-body-md text-body-md text-on-surface-variant/60">
+            © 1892 Aeon's Archive. Curated for the Eternal Dreamer.
         </div>
 </div>
 </footer>
@@ -349,4 +350,39 @@
             }
         }
     });
-</script></body></html>
+</script><script>
+    function renderManuscripts() {
+        const manuscripts = JSON.parse(localStorage.getItem('aeon_manuscripts') || '[]');
+        const categories = {
+            'Poems': { id: 'poems', icon: 'fluid_med' },
+            'Short Stories': { id: 'short-stories', icon: 'auto_awesome' },
+            'Novels': { id: 'novels', icon: 'menu_book' }
+        };
+
+        Object.entries(categories).forEach(([categoryName, config]) => {
+            const section = document.getElementById(config.id);
+            if (!section) return;
+
+            const grid = section.querySelector('.grid');
+            const categoryManuscripts = manuscripts.filter(m => m.category === categoryName);
+            const countLabel = section.querySelector('.font-label-sm.text-on-surface-variant');
+
+            if (categoryManuscripts.length > 0) {
+                // Update count label
+                if (countLabel) {
+                    countLabel.textContent = categoryManuscripts.length.toString().padStart(2, '0') + ' MANUSCRIPTS';
+                }
+
+                // Generate HTML for manuscripts
+                const manuscriptHtml = categoryManuscripts.map(m => `
+                    <a href="reading-suite.html?id=${m.id}" class="glass-card p-6 rounded-xl border border-outline/10 hover:border-secondary/40 transition-all group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <span class="material-symbols-outlined text-6xl">${config.icon}</span>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="font-headline-lg text-body-lg text-primary mb-2 group-hover:text-secondary transition-colors">${m.title}</h4>
+                            <p class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-4">${m.author || 'Anonymous'}</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-label-sm text-outline/60">${m.date || 'Unknown Era'}</span>
+                                <span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all">arrow_forward</span>
+           
