@@ -134,15 +134,11 @@
 <!-- TopNavBar -->
 <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-lg border-b border-outline/10 shadow-lg shadow-surface-container-lowest/50 transition-all duration-500 ease-in-out">
 <div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
-<a class="flex items-center gap-4" href="index.html">
+<div class="flex items-center gap-4">
 <span class="material-symbols-outlined text-primary text-3xl accent_glow">menu_book</span>
 <h1 class="font-display-lg text-headline-md text-primary tracking-tight">Aeon's Archive</h1>
-</a>
+</div>
 <nav class="hidden md:flex gap-8 items-center">
-<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Poems</a>
-<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Stories</a>
-<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Novels</a>
-<div class="h-4 w-px bg-outline/20"></div>
 <button class="material-symbols-outlined text-primary hover:scale-110 transition-transform">star_rate</button>
 </nav>
 <div class="md:hidden">
@@ -157,17 +153,13 @@
 <p class="font-label-sm text-[10px] text-outline uppercase tracking-[0.2em] opacity-60">Scholarly Tools</p>
 </div>
 <nav class="space-y-4">
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded transition-all group" href="dashboard.html">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded transition-all group" href="#">
 <span class="material-symbols-outlined">arrow_back</span>
 <span class="font-body-md">Return to Archive</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded shadow-md" href="submit.html">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded shadow-md" href="#">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_note</span>
 <span class="font-body-md font-semibold">Submit Manuscript</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded transition-all group" href="#">
-<span class="material-symbols-outlined">menu_book</span>
-<span class="font-body-md">Table of Contents</span>
 </a>
 </nav>
 <div class="mt-auto pt-8 border-t border-outline/10 text-center">
@@ -185,9 +177,6 @@
 </div>
 <!-- Form Container -->
 <div class="manuscript-paper p-8 md:p-16 text-on-tertiary-container relative overflow-hidden rounded-sm">
-<div class="absolute top-0 right-0 p-4 opacity-10 rotate-12">
-<span class="material-symbols-outlined text-[12rem]">ink_nib</span>
-</div>
 <form class="space-y-12 relative z-10" id="submissionForm">
 <!-- Title & Category -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -257,25 +246,8 @@
                         </button>
 </div>
 </form>
-</div>
+</div><div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"><div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4"><span class="material-symbols-outlined text-primary">verified_user</span><h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Ink Integrity</h3><p class="font-body-md text-on-surface-variant text-sm">Every stroke is cryptographically sealed to ensure the provenance of your creative soul.</p></div><div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4"><span class="material-symbols-outlined text-primary">echo_proximity</span><h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Echo System</h3><p class="font-body-md text-on-surface-variant text-sm">Your words resonate through the archive, connecting with scholars across the temporal divide.</p></div><div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4"><span class="material-symbols-outlined text-primary">history_edu</span><h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Scholar's Bond</h3><p class="font-body-md text-on-surface-variant text-sm">A permanent record of your contribution to the collective consciousness of Aeon.</p></div></div>
 <!-- Decorative Cards -->
-<div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-<div class="p-8 border border-outline/10 bg-surface-container-low/40 backdrop-blur-sm rounded-lg hover:border-primary/30 transition-colors group">
-<span class="material-symbols-outlined text-primary mb-4 text-3xl group-hover:scale-110 transition-transform">ink_pen</span>
-<h3 class="font-sans font-bold text-primary mb-2 uppercase tracking-widest text-xs">Ink Integrity</h3>
-<p class="text-xs text-on-surface/60 leading-relaxed">Submissions are finalized upon archiving. Ensure your voice is true.</p>
-</div>
-<div class="p-8 border border-outline/10 bg-surface-container-low/40 backdrop-blur-sm rounded-lg hover:border-primary/30 transition-colors group">
-<span class="material-symbols-outlined text-primary mb-4 text-3xl group-hover:scale-110 transition-transform">auto_awesome</span>
-<h3 class="font-sans font-bold text-primary mb-2 uppercase tracking-widest text-xs">Echo System</h3>
-<p class="text-xs text-on-surface/60 leading-relaxed">Manuscripts may resonate through the Library Map over time.</p>
-</div>
-<div class="p-8 border border-outline/10 bg-surface-container-low/40 backdrop-blur-sm rounded-lg hover:border-primary/30 transition-colors group">
-<span class="material-symbols-outlined text-primary mb-4 text-3xl group-hover:scale-110 transition-transform">history_edu</span>
-<h3 class="font-sans font-bold text-primary mb-2 uppercase tracking-widest text-xs">Scholar's Bond</h3>
-<p class="text-xs text-on-surface/60 leading-relaxed">You retain ownership of the soul; we maintain the vessel.</p>
-</div>
-</div>
 </div>
 </main>
 <!-- Footer -->
@@ -285,7 +257,7 @@
 <a class="hover:text-primary transition-all duration-500" href="#">Celestial Terms</a>
 <a class="hover:text-primary transition-all duration-500" href="#">Library Map</a>
 </div>
-<p class="font-label-sm text-[10px] opacity-40 uppercase tracking-[0.3em]">© 1892 Aeon's Archive. Curated for the Eternal Dreamer.</p>
+<p class="font-label-sm text-[10px] opacity-40 uppercase tracking-[0.3em]">© 2026 Aeon's Archive. Curated for the Eternal Dreamer.</p>
 <div class="flex gap-6 opacity-20">
 <span class="material-symbols-outlined text-xl">cyclone</span>
 <span class="material-symbols-outlined text-xl">compost</span>
@@ -347,4 +319,4 @@
             }
         });
     </script>
-</body></html>
+<div class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-12 bg-surface/95 backdrop-blur-xl" id="previewModal"><div class="max-w-4xl w-full h-full overflow-y-auto manuscript-paper p-8 md:p-16 rounded shadow-2xl relative"><button class="absolute top-8 right-8 text-on-tertiary-container hover:text-primary transition-colors" id="closePreview"><span class="material-symbols-outlined text-3xl">close</span></button><div class="space-y-8"><div class="text-center border-b border-outline-variant/20 pb-8"><h2 class="font-display-lg text-4xl text-on-tertiary-container mb-2" id="previewTitle"></h2><p class="font-label-sm text-xs uppercase tracking-widest opacity-60" id="previewCategory"></p></div><div class="font-body-lg text-on-tertiary-container leading-relaxed whitespace-pre-wrap" id="previewBody"></div><div class="pt-12 flex justify-center"><button class="px-12 py-4 bg-primary-container text-on-primary-container font-label-sm uppercase tracking-[0.2em] font-bold shadow-2xl rounded flex items-center gap-3" id="modalSeal"><span class="material-symbols-outlined">verified</span> SEAL FROM PREVIEW</button></div></div></div></div><div class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-surface/90 backdrop-blur-md" id="successOverlay"><div class="text-center space-y-6 p-12 border border-primary/20 bg-surface-container-low rounded-xl shadow-2xl"><span class="material-symbols-outlined text-primary text-7xl animate-pulse">auto_awesome</span><h2 class="font-display-lg text-3xl text-primary">Manuscript Archived</h2><p class="font-body-md text-on-surface/80">Your ink has been preserved in the celestial vaults.</p><div class="flex flex-col gap-4 pt-4"><a class="px-8 py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest font-bold rounded hover:scale-105 transition-transform" href="dashboard.html">View in Master Ledger</a><button class="text-on-surface/40 hover:text-on-surface text-xs uppercase tracking-widest" id="closeSuccess">Return to Suite</button></div></div></div></body></html>
