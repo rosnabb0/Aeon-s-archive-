@@ -147,7 +147,11 @@
 <div class="flex items-center gap-4">
 <a class="font-display-lg text-headline-md text-primary dark:text-primary tracking-tight font-headline-lg" href="index.html">Aeon's Archive</a>
 </div>
-<div class="flex items-center gap-4"><a class="flex items-center gap-2 text-primary hover:text-primary/80 font-label-sm text-label-sm transition-colors group" href="index.html"><span class="material-symbols-outlined text-body-md group-hover:-translate-x-1 transition-transform">arrow_back</span>BACK</a></div>
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2 text-primary hover:text-primary/80 font-label-sm text-label-sm transition-colors group" href="index.html">
+<span class="material-symbols-outlined text-body-md group-hover:-translate-x-1 transition-transform">arrow_back</span>BACK
+            </a>
+</div>
 </nav>
 </header>
 <!-- EST 2026 Structural Anchor -->
@@ -220,7 +224,7 @@
                 </h2>
 <span class="font-label-sm text-label-sm text-on-surface-variant">00 MANUSCRIPTS</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <!-- Empty State Placeholder -->
 <div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
@@ -240,9 +244,9 @@
                 </h2>
 <span class="font-label-sm text-label-sm text-on-surface-variant">00 MANUSCRIPTS</span>
 </div>
-<div class="grid grid-cols-1 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <!-- Empty State Placeholder -->
-<div class="py-20 flex flex-col items-center text-center manuscript-empty-state relative bg-surface-container-low/30 rounded-2xl">
+<div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative bg-surface-container-low/30 rounded-2xl">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-secondary/10 border border-secondary/5">
 <span class="material-symbols-outlined text-4xl">book_2</span>
 </div>
@@ -265,49 +269,7 @@
 <div class="font-body-md text-body-md text-on-surface-variant/60">© 2026 Aeon's Archive. Curated for the Eternal Dreamer.</div>
 </div>
 </footer>
-<!-- Side Navigation Shell (Hidden/Toggleable) -->
-<div class="fixed left-0 top-0 h-full w-64 z-[60] bg-surface-container dark:bg-surface-container-low border-r border-outline/20 shadow-2xl transition-transform -translate-x-full" id="sideNav">
-<div class="flex flex-col p-gutter space-y-8">
-<div class="flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-display-lg text-primary text-headline-lg">Reading Suite</span>
-<span class="font-label-sm text-label-sm text-secondary uppercase opacity-70">Scholarly Tools</span>
-</div>
-<button class="text-on-surface-variant hover:text-primary" onclick="document.getElementById('sideNav').classList.add('-translate-x-full')">
-<span class="material-symbols-outlined">close</span>
-</button>
-</div>
-<div class="space-y-4">
-<a class="flex items-center gap-4 w-full p-4 bg-secondary-container text-on-secondary-container rounded-full scale-95 active:scale-90 transition-transform" href="reading-suite.html">
-<span class="material-symbols-outlined">auto_stories</span>
-<span class="font-body-lg text-body-lg">Open Reading Suite</span>
-</a>
-<button class="flex items-center gap-4 w-full p-4 text-on-surface-variant hover:bg-surface-variant rounded-full scale-95 active:scale-90 transition-transform">
-<span class="material-symbols-outlined">menu_book</span>
-<span class="font-body-lg text-body-lg">Table of Contents</span>
-</button>
-<a class="flex items-center gap-4 w-full p-4 text-on-surface-variant hover:bg-surface-variant rounded-full scale-95 active:scale-90 transition-transform" href="archive.html">
-<span class="material-symbols-outlined">arrow_back</span>
-<span class="font-body-lg text-body-lg">Return to Archive</span>
-</a>
-</div>
-</div>
-</div>
 <script>
-    // Theme Toggle Functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const htmlElement = document.documentElement;
-
-    themeToggle.addEventListener('click', () => {
-        htmlElement.classList.toggle('dark');
-        const isDark = htmlElement.classList.contains('dark');
-        themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-        
-        // Persist theme preference
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    });
-
     // Atmospheric star flicker effect
     function createStars() {
         const body = document.body;
@@ -325,76 +287,96 @@
     }
     createStars();
 
-    // Check for saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        htmlElement.classList.remove('dark');
-        themeIcon.textContent = 'dark_mode';
-    }
-</script>
-<script>
-    window.addEventListener('load', () => {
-        if (window.location.hash) {
-            const target = document.querySelector(window.location.hash);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-                target.style.transition = 'all 0.5s ease-in-out';
-                target.style.transform = 'scale(1.02)';
-                target.style.boxShadow = '0 0 30px #e9c33a';
-                setTimeout(() => {
-                    target.style.transform = 'scale(1)';
-                    target.style.boxShadow = 'none';
-                }, 1500);
-            }
-        }
-    });
-</script><script>
     function renderManuscripts() {
-        const manuscripts = JSON.parse(localStorage.getItem('aeon_manuscripts') || '[]');
-        const categories = {
-            'Poems': { id: 'poems', icon: 'fluid_med' },
-            'Short Stories': { id: 'short-stories', icon: 'auto_awesome' },
-            'Novels': { id: 'novels', icon: 'menu_book' }
+        // 1. Ensure the localStorage key is 'aeon_manuscripts'
+        const rawData = localStorage.getItem('aeon_manuscripts');
+        console.log('[Aeon Archive] Reading from localStorage...', rawData ? 'Data found.' : 'No data found.');
+        
+        let manuscripts = [];
+        try {
+            manuscripts = JSON.parse(rawData || '[]');
+        } catch (e) {
+            console.error('[Aeon Archive] Error parsing manuscripts:', e);
+        }
+
+        // 2. Map submission categories to archive sections
+        // Submission page uses: 'Poem', 'Short Story', 'Grand Novel'
+        const categoryMap = {
+            'Poem': { id: 'poems', icon: 'fluid_med' },
+            'Short Story': { id: 'short-stories', icon: 'auto_awesome' },
+            'Grand Novel': { id: 'novels', icon: 'menu_book' }
         };
 
-        Object.entries(categories).forEach(([categoryName, config]) => {
-            const section = document.getElementById(config.id);
-            if (!section) return;
+        // Initialize display trackers
+        const counts = { 'Poem': 0, 'Short Story': 0, 'Grand Novel': 0 };
+        const content = { 'Poem': '', 'Short Story': '', 'Grand Novel': '' };
 
-            const grid = section.querySelector('.grid');
-            const categoryManuscripts = manuscripts.filter(m => m.category === categoryName);
-            const countLabel = section.querySelector('.font-label-sm.text-on-surface-variant');
-
-            if (categoryManuscripts.length > 0) {
-                // Update count label
-                if (countLabel) {
-                    countLabel.textContent = categoryManuscripts.length.toString().padStart(2, '0') + ' MANUSCRIPTS';
-                }
-
-                // Generate HTML for manuscripts
-                const manuscriptHtml = categoryManuscripts.map(m => `
+        manuscripts.forEach(m => {
+            if (categoryMap[m.category]) {
+                counts[m.category]++;
+                content[m.category] += `
                     <a href="reading-suite.html?id=${m.id}" class="glass-card p-6 rounded-xl border border-outline/10 hover:border-secondary/40 transition-all group relative overflow-hidden">
                         <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                            <span class="material-symbols-outlined text-6xl">${config.icon}</span>
+                            <span class="material-symbols-outlined text-6xl">${categoryMap[m.category].icon}</span>
                         </div>
                         <div class="relative z-10">
-                            <h4 class="font-headline-lg text-body-lg text-primary mb-2 group-hover:text-secondary transition-colors">${m.title}</h4>
-                            <p class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-4">${m.author || 'Anonymous'}</p>
+                            <h4 class="font-headline-lg text-body-lg text-primary mb-2 group-hover:text-secondary transition-colors">${m.title || 'Untitled Scroll'}</h4>
+                            <p class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-4">${m.author || 'Anonymous Observer'}</p>
                             <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-label-sm text-outline/60">${m.date || 'Unknown Era'}</span>
+                                <span class="text-[10px] font-label-sm text-outline/60">${m.timestamp ? new Date(m.timestamp).toLocaleDateString() : 'Circa 2026'}</span>
                                 <span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all">arrow_forward</span>
                             </div>
                         </div>
                     </a>
-                `).join('');
-
-                grid.innerHTML = manuscriptHtml;
-                grid.classList.remove('grid-cols-1');
-                grid.classList.add('md:grid-cols-3');
+                `;
             }
         });
+
+        // 3. Update the DOM
+        Object.entries(categoryMap).forEach(([catKey, config]) => {
+            const section = document.getElementById(config.id);
+            if (!section) return;
+
+            const grid = section.querySelector('.grid');
+            const countLabel = section.querySelector('.font-label-sm.text-on-surface-variant');
+
+            if (counts[catKey] > 0) {
+                // Update count label
+                if (countLabel) {
+                    countLabel.textContent = counts[catKey].toString().padStart(2, '0') + ' MANUSCRIPTS';
+                }
+                // Clear and append
+                grid.innerHTML = content[catKey];
+            } else {
+                // Maintain placeholder if no data for this specific category
+                if (countLabel) countLabel.textContent = '00 MANUSCRIPTS';
+            }
+        });
+        
+        console.log('[Aeon Archive] Render complete. Counts:', counts);
     }
 
     // Run on load
     window.addEventListener('DOMContentLoaded', renderManuscripts);
-</script></body></html>
+
+    // Smooth scroll and highlight logic
+    window.addEventListener('load', () => {
+        if (window.location.hash) {
+            const target = document.querySelector(window.location.hash);
+            if (target) {
+                setTimeout(() => {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    target.style.transition = 'all 0.8s ease-in-out';
+                    target.style.transform = 'scale(1.01)';
+                    const originalShadow = target.style.boxShadow;
+                    target.style.boxShadow = '0 0 40px rgba(233, 195, 58, 0.2)';
+                    setTimeout(() => {
+                        target.style.transform = 'scale(1)';
+                        target.style.boxShadow = originalShadow;
+                    }, 2000);
+                }, 100);
+            }
+        }
+    });
+</script>
+</body></html>
