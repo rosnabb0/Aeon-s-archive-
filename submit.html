@@ -6,7 +6,7 @@
 <title>Curator's Suite - Submit Manuscript | Aeon's Archive</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Literata:ital,wght@0,400;0,700;1,400&amp;family=Space+Mono&amp;family=Bricolage+Grotesque:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -83,8 +83,7 @@
             background-color: #041329;
             background-image: 
                 radial-gradient(at 0% 0%, rgba(242, 202, 80, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(182, 198, 237, 0.08) 0px, transparent 50%),
-                url("https://www.transparenttextures.com/patterns/stardust.png");
+                radial-gradient(at 100% 100%, rgba(182, 198, 237, 0.05) 0px, transparent 50%);
             scrollbar-width: thin;
             scrollbar-color: #d4af37 transparent;
         }
@@ -130,58 +129,48 @@
             scrollbar-width: none;
         }
 
-        #managerSidebar {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        #managerSidebar.collapsed {
-            transform: translateX(-100%);
+        .sidebar-fixed {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 50;
         }
     </style>
 </head>
-<body class="font-sans text-on-surface overflow-x-hidden min-h-screen flex flex-col">
-<!-- TopNavBar -->
-<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-lg border-b border-outline/10 shadow-lg shadow-surface-container-lowest/50">
-<div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
-<div class="flex items-center gap-4">
-<button class="lg:hidden material-symbols-outlined text-primary" id="toggleSidebar">menu</button>
-<a class="flex items-center gap-4 group" href="index.html">
-<span class="material-symbols-outlined text-primary text-3xl accent_glow group-hover:scale-110 transition-transform">menu_book</span>
-<h1 class="font-display-lg text-headline-md text-primary tracking-tight">Aeon's Archive</h1>
-</a>
-</div>
-<nav class="hidden md:flex gap-8 items-center">
-<button class="material-symbols-outlined text-primary hover:scale-110 transition-transform">star_rate</button>
-</nav>
-</div>
-</header>
-<!-- Manuscript Manager Sidebar (Collapsible) -->
-<aside class="fixed left-0 top-0 h-full w-72 z-40 bg-surface-container-low border-r border-outline/10 shadow-2xl pt-24 flex flex-col transition-transform duration-400" id="managerSidebar">
-<div class="px-gutter mb-6 flex justify-between items-center">
+<body class="font-sans text-on-surface overflow-x-hidden min-h-screen flex">
+<!-- SideNavBar: Permanently Visible -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline/10 shadow-2xl flex flex-col p-6 pt-8 z-50 transition-all duration-300 ease-in-out" id="mainSidebar">
+<div class="mb-12 flex items-center gap-3 px-4">
+<span class="material-symbols-outlined text-primary text-3xl accent_glow">menu_book</span>
 <div>
-<h2 class="font-sans font-bold text-primary text-lg tracking-wide uppercase">Manuscript Manager</h2>
-<p class="font-label-sm text-[10px] text-outline uppercase tracking-[0.2em] opacity-60">Personal Vault</p>
+<h1 class="font-display-lg text-xl text-primary tracking-tight leading-none">Aeon's Archive</h1>
+<p class="font-label-sm text-[8px] text-outline uppercase tracking-[0.3em] mt-1">Celestial Repository</p>
 </div>
-<button class="lg:hidden material-symbols-outlined text-outline-variant" id="closeSidebar">close</button>
 </div>
-<div class="flex-grow overflow-y-auto px-4 space-y-2 scrollbar-hide" id="manuscriptList">
-<!-- Manuscript items injected here -->
-<div class="p-8 text-center text-on-surface-variant/40 italic text-sm">
-            No manuscripts archived yet...
-        </div>
-</div>
-<div class="mt-auto p-gutter border-t border-outline/10 bg-surface-container-lowest">
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded transition-all group mb-4" href="archive.html">
-<span class="material-symbols-outlined">arrow_back</span>
-<span class="font-body-md">Return to Archive</span>
+<div class="space-y-2 mb-12">
+<h2 class="font-sans font-bold text-primary text-xs tracking-widest uppercase opacity-60 px-4 mb-4">Reading Suite</h2>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded transition-all group" onclick="openManager()">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">folder_managed</span>
+<span class="font-body-md">Manuscript Manager</span>
+</button>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded shadow-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+<span class="font-body-md font-semibold">Submit Manuscript</span>
 </a>
-<div class="text-center opacity-30">
-<div class="material-symbols-outlined text-primary text-4xl twinkle">auto_awesome</div>
-<p class="font-label-sm text-[10px] mt-2 tracking-[0.2em]">THE CURATOR'S QUILL</p>
 </div>
+<div class="mt-auto pt-8 border-t border-outline/10 flex flex-col items-center px-4 pb-8">
+<div class="material-symbols-outlined text-primary/20 text-6xl twinkle">auto_awesome</div>
+<p class="font-label-sm text-[10px] mt-4 opacity-40 uppercase tracking-widest">The Curator's Quill</p>
+<a class="mt-6 flex items-center gap-2 text-xs text-on-surface-variant hover:text-primary transition-colors" href="archive.html">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+            Return to Archive
+        </a>
 </div>
 </aside>
 <!-- Main Content Canvas -->
-<main class="flex-grow pt-32 pb-24 px-margin-mobile md:px-margin-desktop lg:pl-80">
+<main class="flex-grow ml-64 pt-16 pb-24 px-margin-mobile md:px-margin-desktop transition-all duration-300 ease-in-out" id="mainContent"><button class="fixed top-6 left-6 z-[60] p-2 bg-surface-container-low border border-outline/20 rounded-full text-primary hover:scale-110 transition-transform shadow-lg" id="sidebarToggle" onclick="toggleSidebar()"><span class="material-symbols-outlined">menu</span></button>
 <div class="max-w-4xl mx-auto">
 <!-- Header Section -->
 <div class="mb-12 text-center">
@@ -195,11 +184,15 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 <div class="md:col-span-2">
 <label class="font-label-sm text-[10px] uppercase tracking-widest opacity-60 block mb-2">Manuscript Title</label>
-<input class="w-full bg-transparent border-0 border-b border-outline-variant/30 font-headline-md text-headline-md text-on-tertiary-container py-2 placeholder:text-on-tertiary-container/30 focus:border-primary transition-all" id="mTitle" name="title" placeholder="A Dream Within A Dream..." required="" type="text"/>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/30 font-headline-md text-headline-md text-on-tertiary-container py-2 placeholder:text-on-tertiary-container/30 focus:border-primary transition-all" id="formTitle" name="title" placeholder="A Dream Within A Dream..." required="" type="text"/>
 </div>
 <div>
 <label class="font-label-sm text-[10px] uppercase tracking-widest opacity-60 block mb-2">Category</label>
-<select class="w-full bg-transparent border-0 border-b border-outline-variant/30 font-body-lg text-body-lg text-on-tertiary-container py-3 focus:border-primary transition-all" id="mCategory" name="category"><option value="Poem">Poem</option><option value="Short Story">Short Story</option><option value="Grand Novel">Grand Novel</option><option value="Essay">Essay</option></select>
+<select class="w-full bg-transparent border-0 border-b border-outline-variant/30 font-body-lg text-body-lg text-on-tertiary-container py-3 focus:border-primary transition-all" id="formCategory" name="category">
+<option value="poem">Poem</option>
+<option value="story">Short Story</option>
+<option value="novel">Grand Novel</option>
+</select>
 </div>
 </div>
 <!-- Content Area -->
@@ -212,7 +205,7 @@
 <button class="hover:text-primary transition-colors" type="button">QUOTE</button>
 </div>
 </div>
-<textarea class="w-full bg-transparent border-0 border-b border-outline-variant/10 font-body-lg text-body-lg text-on-tertiary-container leading-relaxed resize-none focus:border-primary transition-all scrollbar-hide" id="mBody" name="content" placeholder="Pour your thoughts onto the parchment..." required="" rows="12"></textarea>
+<textarea class="w-full bg-transparent border-0 border-b border-outline-variant/10 font-body-lg text-body-lg text-on-tertiary-container leading-relaxed resize-none focus:border-primary transition-all scrollbar-hide" id="formContent" name="content" placeholder="Pour your thoughts onto the parchment..." required="" rows="12"></textarea>
 </div>
 <!-- Tags & Date Logic -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
@@ -220,7 +213,7 @@
 <label class="font-label-sm text-[10px] uppercase tracking-widest opacity-60 block mb-2">Lexical Tags</label>
 <div class="flex items-center gap-2 border-b border-outline-variant/30 py-2">
 <span class="material-symbols-outlined text-sm opacity-40">label</span>
-<input class="flex-grow bg-transparent border-none p-0 text-body-md focus:ring-0 placeholder:text-on-tertiary-container/30" id="mTags" placeholder="celestial, longing, midnight..." type="text"/>
+<input class="flex-grow bg-transparent border-none p-0 text-body-md focus:ring-0 placeholder:text-on-tertiary-container/30" id="formTags" placeholder="celestial, longing, midnight..." type="text"/>
 </div>
 </div>
 <div class="space-y-6">
@@ -245,43 +238,40 @@
 </div>
 <!-- Action Buttons -->
 <div class="flex flex-col md:flex-row items-center justify-end gap-6 pt-12">
-<button class="w-full md:w-auto px-8 py-4 border border-outline-variant/40 text-on-tertiary-container font-label-sm uppercase tracking-widest hover:bg-primary/10 transition-all duration-300 rounded" id="previewButton" type="button">
+<button class="w-full md:w-auto px-8 py-4 border border-outline-variant/40 text-on-tertiary-container font-label-sm uppercase tracking-widest hover:bg-primary/10 transition-all duration-300 rounded" onclick="previewManuscript()" type="button">
                         Preview Draft
                     </button>
-<button class="w-full md:w-auto px-12 py-4 bg-primary-container text-on-primary-container font-label-sm uppercase tracking-[0.2em] font-bold shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all duration-500 rounded flex items-center justify-center gap-3" type="submit">
+<button class="w-full md:w-auto px-12 py-4 bg-primary-container text-on-primary-container font-label-sm uppercase tracking-[0.2em] font-bold shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all duration-500 rounded flex items-center justify-center gap-3" id="submitBtn" type="submit">
 <span class="material-symbols-outlined">verified</span>
                         Seal and Archive
                     </button>
 </div>
 </form>
 </div>
-<!-- Info Cards -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
 <div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4">
-<span class="material-symbols-outlined text-primary">verified_user</span>
+<span class="material-symbols-outlined text-secondary">verified_user</span>
 <h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Ink Integrity</h3>
 <p class="font-body-md text-on-surface-variant text-sm">Every stroke is cryptographically sealed to ensure the provenance of your creative soul.</p>
 </div>
 <div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4">
-<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<span class="material-symbols-outlined text-secondary">online_prediction</span>
 <h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Echo System</h3>
 <p class="font-body-md text-on-surface-variant text-sm">Your words resonate through the archive, connecting with scholars across the temporal divide.</p>
 </div>
 <div class="bg-surface-container-low p-6 border border-outline/10 rounded-xl space-y-4">
-<span class="material-symbols-outlined text-primary">history_edu</span>
+<span class="material-symbols-outlined text-secondary">history_edu</span>
 <h3 class="font-sans font-bold text-on-surface uppercase text-sm tracking-widest">Scholar's Bond</h3>
 <p class="font-body-md text-on-surface-variant text-sm">A permanent record of your contribution to the collective consciousness of Aeon.</p>
 </div>
 </div>
 </div>
-</main>
 <!-- Footer -->
-<footer class="w-full py-16 mt-auto bg-surface-container-lowest border-t border-outline/5 flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop text-center">
+<footer class="w-full py-16 mt-16 bg-transparent border-t border-outline/5 flex flex-col items-center gap-8 text-center">
 <div class="flex gap-12 font-sans font-medium text-on-surface-variant text-sm tracking-wide">
 <a class="hover:text-primary transition-all duration-500" href="#">The Inkwell</a>
 <a class="hover:text-primary transition-all duration-500" href="#">Celestial Terms</a>
 <a class="hover:text-primary transition-all duration-500" href="#">Library Map</a>
-<button class="text-xs text-primary/40 hover:text-primary transition-colors uppercase tracking-widest" id="debugBtn">Debug: View Local Data</button>
 </div>
 <p class="font-label-sm text-[10px] opacity-40 uppercase tracking-[0.3em]">© 2026 Aeon's Archive. Curated for the Eternal Dreamer.</p>
 <div class="flex gap-6 opacity-20">
@@ -290,17 +280,69 @@
 <span class="material-symbols-outlined text-xl">air</span>
 </div>
 </footer>
-<!-- Modals -->
-<div class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-12 bg-surface/95 backdrop-blur-xl" id="previewModal">
+</main>
+<!-- Manuscript Manager Slide-over -->
+<div class="fixed inset-0 z-[100] hidden overflow-hidden" id="managerPanel">
+<div class="absolute inset-0 bg-surface/60 backdrop-blur-sm" onclick="closeManager()"></div>
+<div class="absolute right-0 top-0 h-full w-full max-w-xl bg-surface-container border-l border-outline/10 shadow-2xl flex flex-col translate-x-full transition-transform duration-500 ease-in-out" id="panelContent">
+<div class="p-8 border-b border-outline/10 flex justify-between items-center">
+<div>
+<h2 class="font-display-lg text-2xl text-primary mb-1">Master Ledger</h2>
+<p class="font-label-sm text-[10px] text-outline uppercase tracking-widest">Managing Temporal Manuscripts</p>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" onclick="closeManager()">close</button>
+</div>
+<div class="flex-grow overflow-y-auto p-8 scrollbar-hide space-y-12">
+<!-- Category: Poems -->
+<section>
+<div class="flex items-center gap-4 mb-6">
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+<h3 class="font-label-sm text-xs text-primary uppercase tracking-[0.3em]">Poems</h3>
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+</div>
+<div class="space-y-4" id="poemsList">
+<p class="text-on-surface-variant/40 italic text-sm text-center">No poems found in the archive.</p>
+</div>
+</section>
+<!-- Category: Short Stories -->
+<section>
+<div class="flex items-center gap-4 mb-6">
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+<h3 class="font-label-sm text-xs text-primary uppercase tracking-[0.3em]">Short Stories</h3>
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+</div>
+<div class="space-y-4" id="storiesList">
+<p class="text-on-surface-variant/40 italic text-sm text-center">The short story ledger is empty.</p>
+</div>
+</section>
+<!-- Category: Grand Novels -->
+<section>
+<div class="flex items-center gap-4 mb-6">
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+<h3 class="font-label-sm text-xs text-primary uppercase tracking-[0.3em]">Grand Novels</h3>
+<span class="h-[1px] flex-grow bg-outline/10"></span>
+</div>
+<div class="space-y-4" id="novelsList">
+<p class="text-on-surface-variant/40 italic text-sm text-center">No grand novels have been sealed yet.</p>
+</div>
+</section>
+</div>
+<div class="p-8 border-t border-outline/10 bg-surface-container-low">
+<button class="w-full py-3 border border-outline/20 text-on-surface hover:border-primary/40 hover:text-primary transition-all rounded font-label-sm uppercase tracking-widest text-xs" onclick="closeManager()">
+                Continue Curating
+            </button>
+</div>
+</div>
+</div>
+<!-- Preview Modal -->
+<div class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4 md:p-12 bg-surface/95 backdrop-blur-xl" id="previewModal">
 <div class="max-w-4xl w-full h-full overflow-y-auto manuscript-paper p-8 md:p-16 rounded shadow-2xl relative">
-<button class="absolute top-8 right-8 text-on-tertiary-container hover:text-primary transition-colors" id="closePreview">
-<span class="material-symbols-outlined text-3xl">close</span>
-</button>
+<button class="absolute top-8 right-8 text-on-tertiary-container hover:text-primary transition-colors" onclick="document.getElementById('previewModal').classList.add('hidden')"><div class="flex items-center gap-2 font-label-sm text-xs uppercase tracking-widest"><span class="material-symbols-outlined">close</span> Return to Editing</div></button>
 <div class="space-y-8">
 <div class="text-center border-b border-outline-variant/20 pb-8">
 <h2 class="font-display-lg text-4xl text-on-tertiary-container mb-2" id="previewTitle"></h2>
 <p class="font-label-sm text-xs uppercase tracking-widest opacity-60" id="previewCategory"></p>
-</div>
+<p class="font-label-sm text-[10px] uppercase tracking-widest opacity-40 mt-2" id="previewDate"></p></div>
 <div class="font-body-lg text-on-tertiary-container leading-relaxed whitespace-pre-wrap" id="previewBody"></div>
 <div class="pt-12 flex justify-center">
 <button class="px-12 py-4 bg-primary-container text-on-primary-container font-label-sm uppercase tracking-[0.2em] font-bold shadow-2xl rounded flex items-center gap-3" id="modalSeal">
@@ -310,52 +352,8 @@
 </div>
 </div>
 </div>
-<div class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-surface/90 backdrop-blur-md" id="successOverlay">
+<!-- Success Overlay -->
+<div class="fixed inset-0 z-[130] hidden flex items-center justify-center bg-surface/90 backdrop-blur-md" id="successOverlay">
 <div class="text-center space-y-6 p-12 border border-primary/20 bg-surface-container-low rounded-xl shadow-2xl">
 <span class="material-symbols-outlined text-primary text-7xl animate-pulse">auto_awesome</span>
 <h2 class="font-display-lg text-3xl text-primary">Manuscript Archived</h2>
-<p class="font-body-md text-on-surface/80">Your ink has been preserved in the celestial vaults.</p>
-<div class="flex flex-col gap-4 pt-4">
-<button class="px-8 py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest font-bold rounded hover:scale-105 transition-transform" id="closeSuccess">Archive Another</button>
-<a class="text-on-surface/40 hover:text-on-surface text-xs uppercase tracking-widest" href="archive.html">Return to Archive</a>
-</div>
-</div>
-</div>
-<script>
-    const STORAGE_KEY = 'aeon_manuscripts';
-
-    // Sidebar Logic
-    const managerSidebar = document.getElementById('managerSidebar');
-    const toggleSidebar = document.getElementById('toggleSidebar');
-    const closeSidebar = document.getElementById('closeSidebar');
-
-    function updateSidebarDisplay() {
-        const listContainer = document.getElementById('manuscriptList');
-        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        
-        if (data.length === 0) {
-            listContainer.innerHTML = `<div class="p-8 text-center text-on-surface-variant/40 italic text-sm">No manuscripts archived yet...</div>`;
-            return;
-        }
-
-        listContainer.innerHTML = data.map(item => `
-            <div class="group relative bg-surface-container p-4 rounded-lg border border-outline/5 hover:border-primary/30 transition-all cursor-default mb-2">
-                <div class="pr-8">
-                    <h4 class="font-sans font-bold text-sm text-on-surface truncate">${item.title}</h4>
-                    <div class="flex justify-between items-center mt-1">
-                        <p class="font-label-sm text-[9px] text-primary/60 uppercase">${item.category}</p>
-                        <p class="font-label-sm text-[8px] text-outline/40 uppercase">${item.date === "Ageless Echo" ? "Ageless" : item.date}</p>
-                    </div>
-                </div>
-                <button onclick="deleteManuscript(${item.id})" class="absolute top-4 right-3 text-outline hover:text-error opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span class="material-symbols-outlined text-sm">delete</span>
-                </button>
-            </div>
-        `).join('');
-    }
-
-    window.deleteManuscript = function(id) {
-        let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        data = data.filter(item => item.id !== id);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        
