@@ -3,387 +3,326 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Aeon's Archive | The Silent Library</title>
+<title>Aeon's Archive - Sanctum of the Eternal Dreamer</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&amp;family=Literata:opsz,wght@7-72,400;7-72,700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
         .material-symbols-outlined {
             font-family: 'Material Symbols Outlined' !important;
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
             line-height: 1;
-            text-transform: none;
             letter-spacing: normal;
-            word-wrap: normal;
+            text-transform: none;
+            display: inline-block;
             white-space: nowrap;
+            word-wrap: normal;
             direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            /* Prevents layout shift and "flash of unstyled text" by hiding text content until font loads */
+            font-display: block;
         }
         
-        body {
-            background-color: #071325; /* Midnight Blue from Design System */
-            scroll-behavior: smooth;
-            transition: background-color 0.5s ease;
+        /* Custom Scrollbar for the nocturnal theme */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #071325;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #314d3d;
+            border-radius: 10px;
         }
 
-        html.light body {
-            background-color: #f0f4f8;
-        }
-
+        /* Tactile Glassmorphism & Swirling Glows */
         .glass-card {
-            background: rgba(20, 32, 50, 0.4);
+            background: rgba(20, 32, 50, 0.7);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(142, 144, 153, 0.1);
+            border: 1px solid rgba(49, 77, 61, 0.2);
         }
 
-        .star-flicker {
-            animation: flicker 4s infinite ease-in-out;
+        .parchment-glow {
+            background: #fdf6e3;
+            color: #231b00;
+            box-shadow: 0 0 25px rgba(233, 195, 58, 0.15);
+            position: relative;
+            overflow: hidden;
         }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        .aeon-anchor {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-        }
-
-        .manuscript-empty-state::after {
-            content: '';
+        
+        .parchment-glow::before {
+            content: "";
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #e9c33a, transparent);
-            opacity: 0.3;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(233, 195, 58, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .swirl-bg {
+            background: radial-gradient(circle at 50% 50%, #102a54 0%, #071325 100%);
+            overflow: hidden;
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #102a54;
+            color: #b0c6fa;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 100px;
+            transform: translateX(-50%);
+            border: 1px solid #e9c33a;
+        }
+
+        .toast.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @-webkit-keyframes fadein { from {bottom: 80px; opacity: 0;} to {bottom: 100px; opacity: 1;} }
+        @keyframes fadein { from {bottom: 80px; opacity: 0;} to {bottom: 100px; opacity: 1;} }
+        @-webkit-keyframes fadeout { from {bottom: 100px; opacity: 1;} to {bottom: 80px; opacity: 0;} }
+        @keyframes fadeout { from {bottom: 100px; opacity: 1;} to {bottom: 80px; opacity: 0;} }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "tertiary-container": "#143022",
+                        "on-tertiary-container": "#7b9987",
+                        "surface-container-highest": "#2a3549",
+                        "outline-variant": "#44474f",
+                        "on-primary": "#17305a",
+                        "background": "#071325",
+                        "on-surface-variant": "#c4c6d0",
+                        "primary": "#b0c6fa",
+                        "tertiary-fixed": "#caead5",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#1a3628",
+                        "tertiary": "#aeceba",
+                        "tertiary-fixed-dim": "#aeceba",
+                        "surface": "#071325",
+                        "surface-tint": "#b0c6fa",
+                        "secondary-fixed": "#ffe080",
+                        "on-secondary-container": "#3f3200",
+                        "surface-container-lowest": "#030e20",
+                        "on-surface": "#d7e3fc",
+                        "surface-bright": "#2e394d",
+                        "surface-dim": "#071325",
+                        "primary-fixed-dim": "#b0c6fa",
+                        "surface-container": "#142032",
+                        "surface-container-low": "#101c2e",
+                        "primary-container": "#102a54",
+                        "error-container": "#93000a",
+                        "secondary": "#e9c33a",
+                        "surface-container-high": "#1f2a3d",
+                        "inverse-on-surface": "#263144",
+                        "inverse-surface": "#d7e3fc",
+                        "on-tertiary-fixed-variant": "#314d3d",
+                        "on-primary-container": "#7c92c2",
+                        "surface-variant": "#2a3549",
+                        "secondary-fixed-dim": "#e9c33a",
+                        "inverse-primary": "#485e8b",
+                        "on-secondary-fixed-variant": "#564500",
+                        "secondary-container": "#ba9800",
+                        "outline": "#8e9099",
+                        "on-tertiary-fixed": "#042014",
+                        "on-primary-fixed": "#001a41",
+                        "on-background": "#d7e3fc",
+                        "on-secondary-fixed": "#231b00",
+                        "on-primary-fixed-variant": "#2f4672",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary": "#3c2f00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Bricolage Grotesque"],
+                        "headline-lg-mobile": ["Bricolage Grotesque"],
+                        "label-sm": ["Space Mono"],
+                        "body-lg": ["Literata"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "body-md": ["Literata"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
         }
     </style>
-<!-- Theme Configuration -->
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-secondary-fixed-variant": "#564500",
-                    "inverse-surface": "#d7e3fc",
-                    "secondary-container": "#ba9800",
-                    "on-primary": "#17305a",
-                    "surface-container-high": "#1f2a3d",
-                    "on-secondary-container": "#3f3200",
-                    "outline": "#8e9099",
-                    "surface-container-lowest": "#030e20",
-                    "surface-container-low": "#101c2e",
-                    "on-surface": "#d7e3fc",
-                    "secondary-fixed": "#ffe080",
-                    "outline-variant": "#44474f",
-                    "on-secondary": "#3c2f00",
-                    "tertiary": "#aeceba",
-                    "tertiary-fixed-dim": "#aeceba",
-                    "on-tertiary-fixed-variant": "#314d3d",
-                    "surface-bright": "#2e394d",
-                    "on-secondary-fixed": "#231b00",
-                    "inverse-primary": "#485e8b",
-                    "surface-variant": "#2a3549",
-                    "surface-dim": "#071325",
-                    "on-error-container": "#ffdad6",
-                    "on-primary-fixed-variant": "#2f4672",
-                    "error": "#ffb4ab",
-                    "surface": "#071325",
-                    "on-primary-fixed": "#001a41",
-                    "error-container": "#93000a",
-                    "primary": "#b0c6fa",
-                    "surface-tint": "#b0c6fa",
-                    "on-tertiary-container": "#7b9987",
-                    "on-error": "#690005",
-                    "on-background": "#d7e3fc",
-                    "surface-container-highest": "#2a3549",
-                    "on-primary-container": "#7c92c2",
-                    "primary-container": "#102a54",
-                    "on-tertiary-fixed": "#042014",
-                    "background": "#071325",
-                    "secondary": "#e9c33a",
-                    "surface-container": "#142032",
-                    "on-tertiary": "#1a3628",
-                    "tertiary-container": "#143022",
-                    "secondary-fixed-dim": "#e9c33a",
-                    "inverse-on-surface": "#263144",
-                    "primary-fixed-dim": "#b0c6fa",
-                    "tertiary-fixed": "#caead5",
-                    "primary-fixed": "#d8e2ff"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "container-max": "1280px",
-                    "margin-mobile": "16px",
-                    "gutter": "24px",
-                    "margin-desktop": "64px",
-                    "base": "8px"
-            },
-            "fontFamily": {
-                    "headline-lg-mobile": ["Bricolage Grotesque"],
-                    "body-lg": ["Literata"],
-                    "headline-xl": ["Bricolage Grotesque"],
-                    "body-md": ["Literata"],
-                    "headline-lg": ["Bricolage Grotesque"],
-                    "label-sm": ["Space Mono"]
-            },
-            "fontSize": {
-                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                    "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500"}]
-            }
-          },
-        },
-      }
-    </script>
 </head>
-<body class="bg-background text-on-surface selection:bg-secondary/30 overflow-x-hidden">
-<!-- Header (TopNavBar Component) -->
-<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-outline/20 shadow-sm shadow-primary/10">
-<nav class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
-<div class="flex items-center gap-4">
-<a class="font-headline-lg text-headline-lg text-primary tracking-tight" href="index.html">Aeon's Archive</a>
-</div>
-<div class="flex items-center gap-4">
-<a class="flex items-center gap-2 text-primary hover:text-primary/80 font-label-sm text-label-sm transition-colors group" href="index.html">
-<span class="material-symbols-outlined text-body-md group-hover:-translate-x-1 transition-transform">arrow_back</span>BACK
-            </a>
-</div>
-</nav>
+<body class="bg-background text-on-background selection:bg-secondary/30 font-body-md overflow-x-hidden transition-colors duration-700">
+<div class="toast font-label-sm" id="toast">This feature is currently sealed in the stars. (Coming Soon)</div>
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/20 shadow-sm flex items-center justify-between px-margin-mobile h-16">
+<a href="index.html">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-secondary dark:text-secondary-fixed uppercase">Aeon's Archive</h1>
+</a>
+<button class="text-secondary active:scale-95 duration-200" onclick="toggleTheme()">
+<span class="material-symbols-outlined">light_mode</span>
+</button>
 </header>
-<!-- EST 2026 Structural Anchor -->
-<div class="fixed right-4 top-1/2 -translate-y-1/2 z-30 opacity-40 hidden lg:block">
-<div class="aeon-anchor font-label-sm text-label-sm text-secondary uppercase tracking-[0.3em] flex items-center gap-4">
-<span class="w-[1px] h-12 bg-secondary/30"></span>
-        EST 2026 — AEON ARCHIVE
-    </div>
+<main class="pt-24 pb-32 px-margin-mobile swirl-bg min-h-screen relative">
+<!-- Hero Section -->
+<section class="relative z-10 mb-12">
+<div class="flex flex-col items-start gap-2">
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-2 py-0.5 rounded-full">EST 2026</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Aeon's Archive</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xs italic">Sanctum of the Eternal Dreamer</p>
 </div>
-<!-- Main Content -->
-<main class="pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto min-h-screen relative z-10">
-<!-- Editor's Note Fragment -->
-<section class="mb-24 flex flex-col md:flex-row gap-12 items-start">
-<div class="w-full md:w-2/3">
-<div class="mb-2">
-<span class="font-label-sm text-label-sm text-secondary px-3 py-1 bg-secondary/10 border border-secondary/20 rounded-full">INTERNAL MEMORANDUM</span>
-</div>
-<h1 class="font-headline-xl text-headline-xl text-primary mb-6">The Curator's Silence</h1>
-<div class="glass-card p-8 rounded-xl relative overflow-hidden group">
-<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-<span class="material-symbols-outlined text-[120px]">auto_stories</span>
-</div>
-<p class="font-body-lg text-body-lg text-on-surface-variant italic leading-relaxed mb-6">
-                    "The shelves of the Archive stand expectant, carved from the same midnight timber as the sky itself. We wait for the ink to dry on the first scrolls of the new epoch. There is a sacred quality to an empty room—it is not a lack, but a presence of possibility."
-                </p>
+</section>
+<!-- Primary Actions -->
+<section class="grid grid-cols-1 gap-4 mb-12 relative z-10">
+<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="archive.html">
 <div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">face</span>
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">The Eternal Library</span>
 </div>
-<div>
-<p class="font-label-sm text-label-sm text-primary">AEON CURATOR</p>
-<p class="font-label-sm text-[10px] text-on-surface-variant">DEPT. OF ETERNAL RECORDS</p>
-</div>
-</div>
-</div>
-</div>
-<div class="w-full md:w-1/3 aspect-[3/4] rounded-2xl overflow-hidden relative border border-outline/10 shadow-2xl shadow-primary/5">
-<img alt="An ornate, leather-bound blank journal" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx1zEnhRLPwcTdlq0WYZpak_PvfkrIY4FcnLPNtm9bOMFSjGmIj7D3nXAOmqmal2hkYZM4JzclPJo2pZPRiHXJv0fdOpJoUMcLPE7V0_7qolL5Qjw41cV0p4d-0KcvsUdKIOW-7HHXZybJ1OPwtYarHDTRHFy_srBia5a9qtuwqZCxtLWODuaGLYq58AkTXeJyZP8qOQgIY3zrE0qHNB8b2vT_rXOe2aw5_GM7hZCddR21GACfouKVjEW5cgSH8mGAnnTV2wYaShI"/>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
-</div>
-</section>
-<!-- Archive Sections -->
-<div class="space-y-32">
-<!-- Poems Section -->
-<section class="scroll-mt-24" id="poems">
-<div class="flex items-baseline justify-between mb-12 border-b border-outline/10 pb-4">
-<h2 class="font-headline-lg text-headline-lg text-secondary flex items-center gap-4">
+<span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html">
+<div class="flex items-center gap-4">
 <span class="material-symbols-outlined">ink_pen</span>
-                    Poems
-                </h2>
-<span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest manuscript-count" id="count-poems">00 MANUSCRIPTS</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Poem Archive</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 manuscript-grid" id="grid-poems">
-<!-- Empty State (Placeholder) -->
-<div class="col-span-full py-20 flex flex-col items-center text-center manuscript-empty-state relative empty-placeholder">
-<div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
-<span class="material-symbols-outlined text-4xl">ink_pen</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</section>
+<!-- Editor's Note -->
+<section class="mb-12 relative z-10">
+<div class="parchment-glow p-8 rounded-xl flex flex-col gap-4">
+<div class="flex items-center gap-2 border-b border-on-secondary-container/10 pb-2">
+<span class="material-symbols-outlined text-secondary-container">history_edu</span>
+<h3 class="font-label-sm text-label-sm uppercase tracking-widest text-on-secondary-container">Editor's Note</h3>
 </div>
-<h3 class="font-body-lg text-body-lg text-on-surface-variant mb-2">No manuscripts archived yet</h3>
-<p class="font-label-sm text-label-sm text-outline/60 max-w-xs">The lyrical echoes of the stars have not yet been transcribed to paper.</p>
+<p class="font-body-md text-body-md leading-relaxed text-on-secondary-container/90 italic">
+                    "Welcome to the Archive. Here, we transcribe the echoes of the celestial sphere into ink. May your journey through these texts be as luminous as the stars over the Rhône."
+                </p>
+<div class="flex justify-end pt-2">
+<span class="font-label-sm text-label-sm text-on-secondary-container/60">— The Keeper, 2026</span>
 </div>
 </div>
 </section>
-<!-- Short Stories Section -->
-<section class="scroll-mt-24" id="short-stories">
-<div class="flex items-baseline justify-between mb-12 border-b border-outline/10 pb-4">
-<h2 class="font-headline-lg text-headline-lg text-secondary flex items-center gap-4">
-<span class="material-symbols-outlined">auto_stories</span>
-                    Short Stories
-                </h2>
-<span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest manuscript-count" id="count-short-stories">00 MANUSCRIPTS</span>
+<!-- Collections -->
+<section class="mb-12 relative z-10">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Collections</h3>
+<span class="font-label-sm text-label-sm text-outline">EST 2026</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 manuscript-grid" id="grid-short-stories">
-<!-- Empty State -->
-<div class="col-span-full py-20 flex flex-col items-center text-center manuscript-empty-state relative empty-placeholder">
-<div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
-<span class="material-symbols-outlined text-4xl">history_edu</span>
+<div class="grid grid-cols-2 gap-4">
+<!-- Novels: Large Card -->
+<a class="col-span-2 h-48 rounded-xl relative overflow-hidden group block" href="archive.html#novels">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAiWUDPn7uCfIkqmP53lRC9LMEfYpEEI0M8AiH7Sk-OtTFWXoMdHVuIq0Bul7SXTQ696ZG79wNAibeBFOggUhg5vXhi9fkEmc1Nk-JGhk6fQ7ZkKwSw6uU8P1HRoM0uQsVWe_LWh5kLi3iDlLLVHSnThsy67xIeVz8m4xIJEgFIgw5aFAOsXFtNYjOzwdw4Xo_SR-0YmrIDiRYz38jX9qS3-tr4oCzNSMzGOh7byc2uVdfkq9onVY9KTQhTeZCOAR9MK-_DCT9j6Y0')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<span class="font-label-sm text-label-sm text-secondary mb-1 block">TOME I</span>
+<h4 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Novels</h4>
 </div>
-<h3 class="font-body-lg text-body-lg text-on-surface-variant mb-2">No manuscripts archived yet</h3>
-<p class="font-label-sm text-label-sm text-outline/60 max-w-xs">The brief lives of fictional wanderers remain unwritten in this hall.</p>
+</a>
+<!-- Short Stories -->
+<a class="h-40 rounded-xl relative overflow-hidden group block" href="archive.html#short-stories">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTgOdfXvNLsks5rba1X6djG7TWnkmOHY4SGGmtZzkl-7yjQaPw3lYlHyC08gZPt8IvVuf_CH4p7oiNK6tPopmtnao7IDsfggNU13wHivSoeWcjUXcuWBZw-TejCBEXa3bDkxX3JdNRxsjj4zpp8DvLi91p7cr3WrWDKrjfMCDx5Bptu2dTD_v2YfJYZckZ-jwx65JzeJBk7hrypSLyTRpbOIPaBSlzPsjb_S3pGlvxQzr3Fcet9EPtTTftjgHWBlRRIFqkkCuYlXE')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent opacity-80"></div>
+<div class="absolute bottom-4 left-4">
+<h4 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Short Stories</h4>
 </div>
+</a>
+<!-- Poetry -->
+<a class="h-40 rounded-xl relative overflow-hidden group block" href="archive.html#poetry">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNo_qHB10M2JZyn_DqOJED5NUs6zGNoLSIXGKAOByLjrdU5D4Cb6Harei3uRnefDsJolxIHGxELZmBBjHqBVMiuFpNHfRIqfqICEz36zqS7czpuf-_PkTPkipTWEuPTM6QguAjB7aixAfmpCCAdt6sR3eevnQX69jWlxThDbCc6w8vwh-IgvVHje2P-YB1rt2SVykjlOGqtp8rfJVpbA9a-G_Om2-sT2scpNXwptPg8PKyPIxEGOcE7lH00n58X5TLDWYsAXzi9R0')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent opacity-80"></div>
+<div class="absolute bottom-4 left-4">
+<h4 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Poetry</h4>
+</div>
+</a>
 </div>
 </section>
-<!-- Novels Section -->
-<section class="scroll-mt-24" id="novels">
-<div class="flex items-baseline justify-between mb-12 border-b border-outline/10 pb-4">
-<h2 class="font-headline-lg text-headline-lg text-secondary flex items-center gap-4">
-<span class="material-symbols-outlined">menu_book</span>
-                    Novels
-                </h2>
-<span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest manuscript-count" id="count-novels">00 MANUSCRIPTS</span>
+<!-- Reading Suite -->
+<section class="relative z-10 glass-card p-6 rounded-xl border-t border-outline-variant/20 mb-12">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-secondary">architecture</span>
+<h3 class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Reading Suite</h3>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 manuscript-grid" id="grid-novels">
-<!-- Empty State -->
-<div class="col-span-full py-20 flex flex-col items-center text-center manuscript-empty-state relative bg-surface-container-low/30 rounded-2xl empty-placeholder"><div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5"><span class="material-symbols-outlined text-4xl">menu_book</span></div><h3 class="font-body-lg text-body-lg text-on-surface-variant mb-2">No manuscripts archived yet</h3><p class="font-label-sm text-label-sm text-outline/60 max-w-sm">Great odysseys and sprawling epics are still charting their courses through the void.</p></div>
-</div>
+<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="reading-suite.html"><div class="flex items-center gap-4"><span class="material-symbols-outlined">menu_book</span><span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Go to Reading Suite</span></div><span class="material-symbols-outlined">arrow_forward</span></a>
 </section>
-</div>
-</main>
-<!-- Footer Component -->
-<footer class="w-full py-12 mt-auto bg-surface-container-lowest border-t border-outline/10 relative z-10">
-<div class="flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop text-center max-w-container-max mx-auto">
-<a class="font-headline-lg text-primary" href="index.html">Aeon's Archive</a>
-<div class="flex flex-wrap justify-center gap-8">
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="archive.html">The Inkwell</a>
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="terms.html">Celestial Terms</a>
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="map.html">Library Map</a>
-</div>
-<div class="font-body-md text-body-md text-on-surface-variant/60">© 2026 Aeon's Archive. Curated for the Eternal Dreamer.</div>
-</div>
+<!-- Footer -->
+<footer class="w-full pb-32 pt-8 border-t border-outline-variant/10 flex flex-col items-center gap-4 px-margin-mobile">
+<div class="font-label-sm text-label-sm opacity-50 uppercase tracking-widest">© 2026 Aeon's Archive</div>
+<nav class="flex gap-6">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="archive.html">The Inkwell</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#" onclick="showToast()">Celestial Terms</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#" onclick="showToast()">Library Map</a>
+</nav>
 </footer>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container/95 backdrop-blur-2xl border-t border-outline-variant/10 shadow-2xl flex justify-around items-center h-20 px-4 pb-safe">
+<a class="flex flex-col items-center justify-center bg-secondary text-on-secondary rounded-xl px-5 py-2 active:scale-95 transition-all" href="index.html">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-[10px] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="archive.html">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-label-sm text-[10px] mt-1">Archive</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="login.html">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-label-sm text-[10px] mt-1">Write</span>
+</a>
+</nav>
 <script>
-    // Atmospheric star flicker effect (Starry Night styling)
-    function createStars() {
-        const body = document.body;
-        for(let i=0; i<50; i++) {
-            const star = document.createElement('div');
-            star.className = 'fixed star-flicker pointer-events-none rounded-full bg-primary/20 z-0';
-            const size = Math.random() * 2 + 1 + 'px';
-            star.style.width = size;
-            star.style.height = size;
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.animationDelay = Math.random() * 4 + 's';
-            body.appendChild(star);
+        function showToast() {
+            var x = document.getElementById("toast");
+            x.className = "toast show font-label-sm";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
+    </script>
+<script>
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.querySelector('header button:last-child span');
+    if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        icon.textContent = 'dark_mode';
+    } else {
+        html.classList.add('dark');
+        icon.textContent = 'light_mode';
     }
-    createStars();
-
-    // Robust dynamic loading logic
-    window.addEventListener("DOMContentLoaded", () => {
-        const rawData = localStorage.getItem('aeon_manuscripts');
-        let manuscripts = [];
-        
-        try {
-            manuscripts = JSON.parse(rawData || '[]');
-        } catch (e) {
-            console.error('[Aeon Archive] Data Corruption detected:', e);
-        }
-
-        // Debug Script Requirement
-        console.log(`Archive check: ${manuscripts.length} items found`);
-
-        const config = {
-            'Poem': { 
-                gridId: 'grid-poems', 
-                countId: 'count-poems', 
-                icon: 'fluid_med' 
-            },
-            'Short Story': { 
-                gridId: 'grid-short-stories', 
-                countId: 'count-short-stories', 
-                icon: 'auto_awesome' 
-            },
-            'Grand Novel': { 
-                gridId: 'grid-novels', 
-                countId: 'count-novels', 
-                icon: 'menu_book' 
-            }
-        };
-
-        // Group manuscripts by category
-        const groups = manuscripts.reduce((acc, m) => {
-            if (!acc[m.category]) acc[m.category] = [];
-            acc[m.category].push(m);
-            return acc;
-        }, {});
-
-        // Process each section defined in config
-        Object.entries(config).forEach(([category, settings]) => {
-            const grid = document.getElementById(settings.gridId);
-            const countLabel = document.getElementById(settings.countId);
-            const items = groups[category] || [];
-
-            if (items.length > 0) {
-                // Clear placeholder
-                const placeholder = grid.querySelector('.empty-placeholder');
-                if (placeholder) placeholder.remove();
-
-                // Update count
-                countLabel.textContent = `${items.length.toString().padStart(2, '0')} MANUSCRIPTS`;
-
-                // Render items
-                items.forEach(m => {
-                    const card = document.createElement('a');
-                    card.href = `reading-suite.html?id=${m.id}`;
-                    card.className = "manuscript-item glass-card p-6 rounded-xl border border-outline/10 hover:border-secondary/40 transition-all group relative overflow-hidden block";
-                    card.innerHTML = `
-                        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                            <span class="material-symbols-outlined text-6xl">${settings.icon}</span>
-                        </div>
-                        <div class="relative z-10">
-                            <h4 class="font-headline-lg text-body-lg text-primary mb-2 group-hover:text-secondary transition-colors">${m.title || 'Untitled Scroll'}</h4>
-                            <p class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-4">${m.author || 'Anonymous Observer'}</p>
-                            <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-label-sm text-outline/60">${m.timestamp ? new Date(m.timestamp).toLocaleDateString() : 'Circa 2026'}</span>
-                                <span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all">arrow_forward</span>
-                            </div>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-            }
-        });
-    });
-
-    // Deep link handling (scroll to section if hash exists)
-    window.addEventListener('load', () => {
-        if (window.location.hash) {
-            const target = document.querySelector(window.location.hash);
-            if (target) {
-                setTimeout(() => {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                    target.style.transition = 'all 0.8s ease-in-out';
-                    target.style.transform = 'scale(1.01)';
-                    const originalShadow = target.style.boxShadow;
-                    target.style.boxShadow = '0 0 40px rgba(233, 195, 58, 0.1)';
-                    setTimeout(() => {
-                        target.style.transform = 'scale(1)';
-                        target.style.boxShadow = originalShadow;
-                    }, 2000);
-                }, 300);
-            }
-        }
-    });
-</script>
-</body></html>
+}
+</script></body></html>
