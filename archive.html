@@ -386,4 +386,15 @@
                     target.style.transition = 'all 0.8s ease-in-out';
                     target.style.transform = 'scale(1.01)';
                     const originalShadow = target.style.boxShadow;
+                    target.style.boxShadow = '0 0 40px rgba(233, 195, 58, 0.1)';
+                    setTimeout(() => {
+                            target.style.transform = 'scale(1)';
+                            target.style.boxShadow = originalShadow;
+                    }, 2000);
+                }, 300)
+            }
+        });
+</script>
+</body>
+</html>
                     
