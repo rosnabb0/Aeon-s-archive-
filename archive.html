@@ -262,9 +262,7 @@
 <a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="terms.html">Celestial Terms</a>
 <a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="map.html">Library Map</a>
 </div>
-<div class="font-body-md text-body-md text-on-surface-variant/60">
-            © 1892 Aeon's Archive. Curated for the Eternal Dreamer.
-        </div>
+<div class="font-body-md text-body-md text-on-surface-variant/60">© 2026 Aeon's Archive. Curated for the Eternal Dreamer.</div>
 </div>
 </footer>
 <!-- Side Navigation Shell (Hidden/Toggleable) -->
@@ -385,25 +383,18 @@
                             <div class="flex items-center justify-between">
                                 <span class="text-[10px] font-label-sm text-outline/60">${m.date || 'Unknown Era'}</span>
                                 <span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all">arrow_forward</span>
-                                                    </div>
-                </div>
-            </a>
-        `).join('');
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
 
-        grid.innerHTML = manuscriptHtml;
-        grid.classList.remove('grid-cols-1');
-        grid.classList.add('md:grid-cols-3');
+                grid.innerHTML = manuscriptHtml;
+                grid.classList.remove('grid-cols-1');
+                grid.classList.add('md:grid-cols-3');
+            }
+        });
     }
-});
 
-}
-
-// Run on load
-window.addEventListener(
-    'DOMContentLoaded',
-    renderManuscripts
-);
-</script>
-</body>
-</html>
-           
+    // Run on load
+    window.addEventListener('DOMContentLoaded', renderManuscripts);
+</script></body></html>
