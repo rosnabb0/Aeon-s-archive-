@@ -382,4 +382,39 @@
                 <h3 class="font-headline-lg text-xl text-primary">${item.title}</h3>
                 <p class="font-body-md text-sm text-on-surface-variant line-clamp-3 opacity-80">${item.content.substring(0, 120)}...</p>
                 <div class="mt-auto pt-4 flex flex-wrap gap-2">
-                    ${item.tags ? item.tags.split(',').map(tag => `<span class="px-2 py-0.5 rounded-full bg-
+                                        ${item.tags ? item.tags.split(',').map(tag => `<span class="px-2 py-0.5 rounded-full bg-primary/5 border border-primary/10 text-[10px] text-primary/70 uppercase font-label-sm">${tag.trim()}</span>`).join('') : ''}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // Update counts
+        Object.keys(counts).forEach(key => {
+            const countId = categories[key].count;
+            const count = counts[key];
+            document.getElementById(countId).textContent = `${count.toString().padStart(2, '0')} MANUSCRIPT${count === 1 ? '' : 'S'}`;
+        });
+    }
+
+    // Initial load
+    window.addEventListener('load', loadManuscripts);
+
+    // Listen for storage changes from other tabs (Submit page)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'aeon_manuscripts') {
+            loadManuscripts();
+        }
+    });
+
+    // Handle scroll anchors
+    window.addEventListener('load', () => {
+        if (window.location.hash) {
+            const target = document.querySelector(window.location.hash);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+</script>
+</body>
+</html>
