@@ -23,7 +23,7 @@
             -webkit-font-feature-settings: 'liga';
             -webkit-font-smoothing: antialiased;
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            /* Prevents layout shift and "flash of unstyled text" by hiding text content until font loads */
+            /* Force icons to render by ensuring font-family priority and display */
             font-display: block;
         }
         
@@ -194,9 +194,6 @@
 <a href="index.html">
 <h1 class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-secondary dark:text-secondary-fixed uppercase">Aeon's Archive</h1>
 </a>
-<button class="text-secondary active:scale-95 duration-200" onclick="toggleTheme()">
-<span class="material-symbols-outlined">light_mode</span>
-</button>
 </header>
 <main class="pt-24 pb-32 px-margin-mobile swirl-bg min-h-screen relative">
 <!-- Hero Section -->
@@ -216,7 +213,7 @@
 </div>
 <span class="material-symbols-outlined">arrow_forward</span>
 </a>
-<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html">
+<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html#poems">
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined">ink_pen</span>
 <span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Poem Archive</span>
@@ -264,7 +261,7 @@
 </div>
 </a>
 <!-- Poetry -->
-<a class="h-40 rounded-xl relative overflow-hidden group block" href="archive.html#poetry">
+<a class="h-40 rounded-xl relative overflow-hidden group block" href="archive.html#poems">
 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNo_qHB10M2JZyn_DqOJED5NUs6zGNoLSIXGKAOByLjrdU5D4Cb6Harei3uRnefDsJolxIHGxELZmBBjHqBVMiuFpNHfRIqfqICEz36zqS7czpuf-_PkTPkipTWEuPTM6QguAjB7aixAfmpCCAdt6sR3eevnQX69jWlxThDbCc6w8vwh-IgvVHje2P-YB1rt2SVykjlOGqtp8rfJVpbA9a-G_Om2-sT2scpNXwptPg8PKyPIxEGOcE7lH00n58X5TLDWYsAXzi9R0')"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent opacity-80"></div>
 <div class="absolute bottom-4 left-4">
@@ -279,7 +276,13 @@
 <span class="material-symbols-outlined text-secondary">architecture</span>
 <h3 class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Reading Suite</h3>
 </div>
-<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="reading-suite.html"><div class="flex items-center gap-4"><span class="material-symbols-outlined">menu_book</span><span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Go to Reading Suite</span></div><span class="material-symbols-outlined">arrow_forward</span></a>
+<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="reading-suite.html">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Go to Reading Suite</span>
+</div>
+<span class="material-symbols-outlined">arrow_forward</span>
+</a>
 </section>
 <!-- Footer -->
 <footer class="w-full pb-32 pt-8 border-t border-outline-variant/10 flex flex-col items-center gap-4 px-margin-mobile">
@@ -301,13 +304,9 @@
 <span class="material-symbols-outlined">library_books</span>
 <span class="font-label-sm text-[10px] mt-1">Archive</span>
 </a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="login.html">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="submit.html">
 <span class="material-symbols-outlined">edit_note</span>
 <span class="font-label-sm text-[10px] mt-1">Write</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="profile.html">
-<span class="material-symbols-outlined">person</span>
-<span class="font-label-sm text-[10px] mt-1">Profile</span>
 </a>
 </nav>
 <script>
@@ -317,62 +316,4 @@
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
     </script>
-<script>
-function toggleTheme() {
-    const html = document.documentElement;
-    const icon = document.querySelector('header button:last-child span');
-    if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        icon.textContent = 'dark_mode';
-    } else {
-        html.classList.add('dark');
-        icon.textContent = 'light_mode';
-    }
-}
-</script><script>
-(function() {
-    function updateArchiveStats() {
-        const manuscripts = JSON.parse(localStorage.getItem('manuscripts') || '[]');
-        if (manuscripts.length === 0) return;
-
-        const counts = {
-            'Novels': 0,
-            'Short Stories': 0,
-            'Poetry': 0
-        };
-
-        manuscripts.forEach(m => {
-            if (counts.hasOwnProperty(m.category)) {
-                counts[m.category]++;
-            }
-        });
-
-        // Update Collections counts
-        const collectionLinks = document.querySelectorAll('section:nth-of-type(4) a');
-        collectionLinks.forEach(link => {
-            const title = link.querySelector('h4')?.textContent;
-            if (title && counts[title] !== undefined) {
-                const countSpan = document.createElement('span');
-                countSpan.className = 'font-label-sm text-label-sm text-secondary/60 ml-2';
-                countSpan.textContent = `(${counts[title]} items)`;
-                link.querySelector('h4').appendChild(countSpan);
-            }
-        });
-
-        // Update Editor's Note with latest work snippet if available
-        const latestWork = manuscripts[manuscripts.length - 1];
-        if (latestWork) {
-            const noteArea = document.querySelector('section:nth-of-type(3) p');
-            if (noteArea) {
-                const updateText = document.createElement('div');
-                updateText.className = 'mt-4 pt-4 border-t border-on-secondary-container/10 text-label-sm uppercase tracking-widest opacity-70';
-                updateText.innerHTML = `Latest Acquisition: <span class="text-secondary-container">${latestWork.title}</span>`;
-                noteArea.parentNode.insertBefore(updateText, noteArea.nextSibling);
-            }
-        }
-    }
-
-    // Run on load
-    window.addEventListener('DOMContentLoaded', updateArchiveStats);
-})();
-</script></body></html>
+</body></html>
