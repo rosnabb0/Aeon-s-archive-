@@ -357,3 +357,47 @@
 <div class="text-center space-y-6 p-12 border border-primary/20 bg-surface-container-low rounded-xl shadow-2xl">
 <span class="material-symbols-outlined text-primary text-7xl animate-pulse">auto_awesome</span>
 <h2 class="font-display-lg text-3xl text-primary">Manuscript Archived</h2>
+<p class="font-body-md text-on-surface/80">
+    Your ink has been preserved in the celestial vaults.
+</p>
+<div class="flex flex-col gap-4 pt-4">
+    <button class="px-8 py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest font-bold rounded hover:scale-105 transition-transform"
+        onclick="openManager(); document.getElementById('successOverlay').classList.add('hidden')">
+        View in Master Ledger
+    </button>
+    <button class="text-on-surface/40 hover:text-on-surface text-xs uppercase tracking-widest"
+        onclick="document.getElementById('successOverlay').classList.add('hidden')">
+        Return to Suite
+    </button>
+</div>
+</div>
+</div>
+
+<script>
+    // Manager Panel Logic
+    function openManager() {
+        const panel = document.getElementById('managerPanel');
+        const content = document.getElementById('panelContent');
+
+        panel.classList.remove('hidden');
+        setTimeout(() => content.classList.remove('translate-x-full'), 10);
+
+        renderLedger();
+    }
+
+    function closeManager() {
+        const content = document.getElementById('panelContent');
+
+        content.classList.add('translate-x-full');
+        setTimeout(() =>
+            document.getElementById('managerPanel')
+                .classList.add('hidden'),
+            500
+        );
+    }
+
+    // Storage and Rendering
+    function saveManuscript(data) {
+        const stored = JSON.parse(
+            localStorage.getItem('aeon_manuscripts') || '[]'
+        );
