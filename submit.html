@@ -166,7 +166,7 @@
 <div class="material-symbols-outlined text-primary/20 text-6xl twinkle">auto_awesome</div>
 <p class="font-label-sm text-[10px] mt-4 opacity-40">THE CURATOR'S QUILL</p>
 </div>
-</aside>
+<div class="mt-8 flex-grow flex flex-col overflow-hidden"><div class="flex items-center justify-between mb-4 px-2"><h3 class="font-sans font-bold text-primary text-sm tracking-widest uppercase">Manager</h3><span class="material-symbols-outlined text-primary/40 text-sm">settings</span></div><div class="flex-grow overflow-y-auto scrollbar-hide space-y-2 pr-2" id="manuscriptList"><!-- Entries will be injected here --></div></div></aside>
 <!-- Main Content Canvas -->
 <main class="flex-grow pt-32 pb-24 px-margin-mobile md:px-margin-desktop lg:pl-80">
 <div class="max-w-4xl mx-auto">
@@ -359,66 +359,4 @@
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalContent = btn.innerHTML;
             
-            btn.disabled = true;
-            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">history_edu</span> SEALING...`;
-            
-            setTimeout(() => {
-                saveManuscript();
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
-                form.reset();
-                dateWrapper.classList.remove('opacity-10', 'pointer-events-none');
-                agelessEcho.classList.add('hidden');
-                toggle.checked = false;
-            }, 1500);
-        });
-
-        // Preview Logic
-        const previewBtn = document.getElementById('previewButton');
-        const previewModal = document.getElementById('previewModal');
-        const closePreview = document.getElementById('closePreview');
-        const modalSeal = document.getElementById('modalSeal');
-
-        previewBtn.addEventListener('click', () => {
-            document.getElementById('previewTitle').textContent = document.getElementById('mTitle').value || 'Untitled Fragment';
-            document.getElementById('previewCategory').textContent = document.getElementById('mCategory').value;
-            document.getElementById('previewBody').textContent = document.getElementById('mBody').value || 'The page remains blank, awaiting the pulse of your thoughts...';
-            previewModal.classList.remove('hidden');
-        });
-
-        closePreview.addEventListener('click', () => previewModal.classList.add('hidden'));
-        modalSeal.addEventListener('click', () => {
-            previewModal.classList.add('hidden');
-            form.dispatchEvent(new Event('submit'));
-        });
-
-        document.getElementById('closeSuccess').addEventListener('click', () => {
-            document.getElementById('successOverlay').classList.add('hidden');
-        });
-
-        // Debug Tool
-        document.getElementById('debugBtn').addEventListener('click', () => {
-            const data = localStorage.getItem(STORAGE_KEY);
-            console.log('--- AEON ARCHIVE LOCAL STORAGE ---');
-            console.log('Key:', STORAGE_KEY);
-            console.log('Current Content:', data ? JSON.parse(data) : 'Empty');
-            alert('Local data logged to console. Press F12 to view.');
-        });
-
-        // Nav Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('header');
-            if (window.scrollY > 20) {
-                nav.classList.add('py-3', 'shadow-2xl');
-                nav.classList.remove('py-4');
-            } else {
-                nav.classList.remove('py-3', 'shadow-2xl');
-                nav.classList.add('py-4');
-            }
-        });
-    </script>
-</body>
-</html>
