@@ -6,6 +6,7 @@
 <title>Aeon's Archive | The Silent Library</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&amp;family=Literata:ital,wght@0,400;1,400&amp;family=Space+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -15,10 +16,6 @@
             background-color: #071325; /* Midnight Blue from Design System */
             scroll-behavior: smooth;
             transition: background-color 0.5s ease;
-        }
-
-        html.light body {
-            background-color: #f0f4f8;
         }
 
         .glass-card {
@@ -56,9 +53,10 @@
             background: rgba(20, 32, 50, 0.6);
             border: 1px solid rgba(233, 195, 58, 0.1);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         .manuscript-card:hover {
-            border-color: rgba(233, 195, 58, 0.4);
+            border-color: #e9c33a;
             transform: translateY(-4px);
             box-shadow: 0 10px 30px -10px rgba(176, 198, 250, 0.2);
         }
@@ -219,7 +217,7 @@
 <span class="font-label-sm text-label-sm text-on-surface-variant" id="count-poem">00 MANUSCRIPTS</span>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="container-poem">
-<!-- Empty State Placeholder (Visible only if no items) -->
+<!-- Empty State -->
 <div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative" id="empty-poem">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
 <span class="material-symbols-outlined text-4xl">ink_pen</span>
@@ -239,7 +237,7 @@
 <span class="font-label-sm text-label-sm text-on-surface-variant" id="count-short-story">00 MANUSCRIPTS</span>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="container-short-story">
-<!-- Empty State Placeholder -->
+<!-- Empty State -->
 <div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative" id="empty-short-story">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
 <span class="material-symbols-outlined text-4xl">history_edu</span>
@@ -259,7 +257,7 @@
 <span class="font-label-sm text-label-sm text-on-surface-variant" id="count-grand-novel">00 MANUSCRIPTS</span>
 </div>
 <div class="grid grid-cols-1 gap-8" id="container-grand-novel">
-<!-- Empty State Placeholder -->
+<!-- Empty State -->
 <div class="py-20 flex flex-col items-center text-center manuscript-empty-state relative bg-surface-container-low/30 rounded-2xl" id="empty-grand-novel">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-secondary/10 border border-secondary/5">
 <span class="material-symbols-outlined text-4xl">book_2</span>
@@ -283,37 +281,10 @@
 <div class="font-body-md text-body-md text-on-surface-variant/60">© 2026 Aeon's Archive. Curated for the Eternal Dreamer.</div>
 </div>
 </footer>
-<!-- Side Navigation Shell (Hidden/Toggleable) -->
-<div class="fixed left-0 top-0 h-full w-64 z-[60] bg-surface-container dark:bg-surface-container-low border-r border-outline/20 shadow-2xl transition-transform -translate-x-full" id="sideNav">
-<div class="flex flex-col p-gutter space-y-8">
-<div class="flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-display-lg text-primary text-headline-lg">Reading Suite</span>
-<span class="font-label-sm text-label-sm text-secondary uppercase opacity-70">Scholarly Tools</span>
-</div>
-<button class="text-on-surface-variant hover:text-primary" onclick="document.getElementById('sideNav').classList.add('-translate-x-full')">
-<span class="material-symbols-outlined">close</span>
-</button>
-</div>
-<div class="space-y-4">
-<a class="flex items-center gap-4 w-full p-4 bg-secondary-container text-on-secondary-container rounded-full scale-95 active:scale-90 transition-transform" href="reading-suite.html">
-<span class="material-symbols-outlined">auto_stories</span>
-<span class="font-body-lg text-body-lg">Open Reading Suite</span>
-</a>
-<button class="flex items-center gap-4 w-full p-4 text-on-surface-variant hover:bg-surface-variant rounded-full scale-95 active:scale-90 transition-transform">
-<span class="material-symbols-outlined">menu_book</span>
-<span class="font-body-lg text-body-lg">Table of Contents</span>
-</button>
-<a class="flex items-center gap-4 w-full p-4 text-on-surface-variant hover:bg-surface-variant rounded-full scale-95 active:scale-90 transition-transform" href="archive.html">
-<span class="material-symbols-outlined">arrow_back</span>
-<span class="font-body-lg text-body-lg">Return to Archive</span>
-</a>
-</div>
-</div>
-</div>
 <script>
-    // Theme Toggle Functionality (Restored for completeness if used elsewhere)
-    const htmlElement = document.documentElement;
+    // Unified Manuscript Retrieval Logic
+    const STORAGE_KEY = 'aeon_archive_data';
+    const SELECTED_KEY = 'selected_manuscript_id';
 
     // Atmospheric star flicker effect
     function createStars() {
@@ -330,30 +301,25 @@
             body.appendChild(star);
         }
     }
-    createStars();
 
-    // Check for saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        htmlElement.classList.remove('dark');
+    function openManuscript(id) {
+        localStorage.setItem(SELECTED_KEY, id);
+        window.location.href = 'reading-suite.html';
     }
 
-    // Manuscript Synchronization Logic
     function loadManuscripts() {
-        const manuscripts = JSON.parse(localStorage.getItem('aeon_manuscripts') || '[]');
+        const manuscripts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         
-        // Group by category mapping from Submission Page values
         const categories = {
             'Poem': { container: 'container-poem', empty: 'empty-poem', count: 'count-poem' },
             'Short Story': { container: 'container-short-story', empty: 'empty-short-story', count: 'count-short-story' },
             'Grand Novel': { container: 'container-grand-novel', empty: 'empty-grand-novel', count: 'count-grand-novel' }
         };
 
-        // Reset containers but keep empty states
+        // Reset display
         Object.values(categories).forEach(cat => {
             const container = document.getElementById(cat.container);
             const emptyState = document.getElementById(cat.empty);
-            // Clear items but keep the empty state div
             const items = container.querySelectorAll('.manuscript-card');
             items.forEach(item => item.remove());
             emptyState.style.display = 'flex';
@@ -374,15 +340,17 @@
 
             const card = document.createElement('div');
             card.className = 'manuscript-card p-6 rounded-xl flex flex-col gap-4';
+            card.onclick = () => openManuscript(item.id);
+            
             card.innerHTML = `
                 <div class="flex justify-between items-start">
                     <span class="font-label-sm text-[10px] text-secondary uppercase tracking-widest">${item.date}</span>
                     <span class="material-symbols-outlined text-primary/40 text-sm">auto_stories</span>
                 </div>
-                <h3 class="font-headline-lg text-xl text-primary">${item.title}</h3>
+                <h3 class="font-headline-lg text-xl text-primary group-hover:text-secondary transition-colors">${item.title}</h3>
                 <p class="font-body-md text-sm text-on-surface-variant line-clamp-3 opacity-80">${item.content.substring(0, 120)}...</p>
                 <div class="mt-auto pt-4 flex flex-wrap gap-2">
-                                        ${item.tags ? item.tags.split(',').map(tag => `<span class="px-2 py-0.5 rounded-full bg-primary/5 border border-primary/10 text-[10px] text-primary/70 uppercase font-label-sm">${tag.trim()}</span>`).join('') : ''}
+                    ${item.tags ? item.tags.split(',').map(tag => `<span class="px-2 py-0.5 rounded-full bg-primary/5 border border-primary/10 text-[10px] text-primary/70 uppercase font-label-sm">${tag.trim()}</span>`).join('') : ''}
                 </div>
             `;
             container.appendChild(card);
@@ -396,25 +364,15 @@
         });
     }
 
-    // Initial load
-    window.addEventListener('load', loadManuscripts);
+    window.addEventListener('load', () => {
+        createStars();
+        loadManuscripts();
+    });
 
-    // Listen for storage changes from other tabs (Submit page)
     window.addEventListener('storage', (e) => {
-        if (e.key === 'aeon_manuscripts') {
+        if (e.key === STORAGE_KEY) {
             loadManuscripts();
         }
     });
-
-    // Handle scroll anchors
-    window.addEventListener('load', () => {
-        if (window.location.hash) {
-            const target = document.querySelector(window.location.hash);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    });
 </script>
-</body>
-</html>
+</body></html>
