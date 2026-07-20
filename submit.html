@@ -368,3 +368,57 @@
             setTimeout(() => {
                 saveManuscript();
                 btn.innerHTML = originalContent;
+                btn.disabled = false;
+                form.reset();
+                dateWrapper.classList.remove('opacity-10', 'pointer-events-none');
+                agelessEcho.classList.add('hidden');
+                toggle.checked = false;
+            }, 1500);
+        });
+
+        // Preview Logic
+        const previewBtn = document.getElementById('previewButton');
+        const previewModal = document.getElementById('previewModal');
+        const closePreview = document.getElementById('closePreview');
+        const modalSeal = document.getElementById('modalSeal');
+
+        previewBtn.addEventListener('click', () => {
+            document.getElementById('previewTitle').textContent = document.getElementById('mTitle').value || 'Untitled Fragment';
+            document.getElementById('previewCategory').textContent = document.getElementById('mCategory').value;
+            document.getElementById('previewBody').textContent = document.getElementById('mBody').value || 'The page remains blank, awaiting the pulse of your thoughts...';
+            previewModal.classList.remove('hidden');
+        });
+
+        closePreview.addEventListener('click', () => previewModal.classList.add('hidden'));
+        modalSeal.addEventListener('click', () => {
+            previewModal.classList.add('hidden');
+            form.dispatchEvent(new Event('submit'));
+        });
+
+        document.getElementById('closeSuccess').addEventListener('click', () => {
+            document.getElementById('successOverlay').classList.add('hidden');
+        });
+
+        // Debug Tool
+        document.getElementById('debugBtn').addEventListener('click', () => {
+            const data = localStorage.getItem(STORAGE_KEY);
+            console.log('--- AEON ARCHIVE LOCAL STORAGE ---');
+            console.log('Key:', STORAGE_KEY);
+            console.log('Current Content:', data ? JSON.parse(data) : 'Empty');
+            alert('Local data logged to console. Press F12 to view.');
+        });
+
+        // Nav Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('header');
+            if (window.scrollY > 20) {
+                nav.classList.add('py-3', 'shadow-2xl');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.remove('py-3', 'shadow-2xl');
+                nav.classList.add('py-4');
+            }
+        });
+    </script>
+</body>
+</html>
