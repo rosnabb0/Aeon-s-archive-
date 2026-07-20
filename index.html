@@ -23,11 +23,9 @@
             -webkit-font-feature-settings: 'liga';
             -webkit-font-smoothing: antialiased;
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            /* Force icons to render by ensuring font-family priority and display */
             font-display: block;
         }
         
-        /* Custom Scrollbar for the nocturnal theme */
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -39,7 +37,6 @@
             border-radius: 10px;
         }
 
-        /* Tactile Glassmorphism & Swirling Glows */
         .glass-card {
             background: rgba(20, 32, 50, 0.7);
             backdrop-filter: blur(12px);
@@ -194,6 +191,9 @@
 <a href="index.html">
 <h1 class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-secondary dark:text-secondary-fixed uppercase">Aeon's Archive</h1>
 </a>
+<button class="text-secondary active:scale-95 duration-200" onclick="toggleTheme()">
+<span class="material-symbols-outlined" id="theme-icon">light_mode</span>
+</button>
 </header>
 <main class="pt-24 pb-32 px-margin-mobile swirl-bg min-h-screen relative">
 <!-- Hero Section -->
@@ -213,7 +213,7 @@
 </div>
 <span class="material-symbols-outlined">arrow_forward</span>
 </a>
-<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html#poems">
+<a class="w-full h-20 border border-secondary/40 text-secondary rounded-xl flex items-center justify-between px-6 glass-card active:scale-[0.98] transition-transform" href="archive.html#poetry">
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined">ink_pen</span>
 <span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Poem Archive</span>
@@ -261,7 +261,7 @@
 </div>
 </a>
 <!-- Poetry -->
-<a class="h-40 rounded-xl relative overflow-hidden group block" href="archive.html#poems">
+<a class="h-40 rounded-xl relative overflow-hidden group block" href="archive.html#poetry">
 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNo_qHB10M2JZyn_DqOJED5NUs6zGNoLSIXGKAOByLjrdU5D4Cb6Harei3uRnefDsJolxIHGxELZmBBjHqBVMiuFpNHfRIqfqICEz36zqS7czpuf-_PkTPkipTWEuPTM6QguAjB7aixAfmpCCAdt6sR3eevnQX69jWlxThDbCc6w8vwh-IgvVHje2P-YB1rt2SVykjlOGqtp8rfJVpbA9a-G_Om2-sT2scpNXwptPg8PKyPIxEGOcE7lH00n58X5TLDWYsAXzi9R0')"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent opacity-80"></div>
 <div class="absolute bottom-4 left-4">
@@ -271,19 +271,6 @@
 </div>
 </section>
 <!-- Reading Suite -->
-<section class="relative z-10 glass-card p-6 rounded-xl border-t border-outline-variant/20 mb-12">
-<div class="flex items-center gap-3 mb-4">
-<span class="material-symbols-outlined text-secondary">architecture</span>
-<h3 class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Reading Suite</h3>
-</div>
-<a class="w-full h-20 bg-secondary text-on-secondary rounded-xl flex items-center justify-between px-6 shadow-lg active:scale-[0.98] transition-transform" href="reading-suite.html">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined">menu_book</span>
-<span class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Go to Reading Suite</span>
-</div>
-<span class="material-symbols-outlined">arrow_forward</span>
-</a>
-</section>
 <!-- Footer -->
 <footer class="w-full pb-32 pt-8 border-t border-outline-variant/10 flex flex-col items-center gap-4 px-margin-mobile">
 <div class="font-label-sm text-label-sm opacity-50 uppercase tracking-widest">© 2026 Aeon's Archive</div>
@@ -304,7 +291,7 @@
 <span class="material-symbols-outlined">library_books</span>
 <span class="font-label-sm text-[10px] mt-1">Archive</span>
 </a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="submit.html">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors active:scale-95" href="login.html">
 <span class="material-symbols-outlined">edit_note</span>
 <span class="font-label-sm text-[10px] mt-1">Write</span>
 </a>
@@ -315,5 +302,32 @@
             x.className = "toast show font-label-sm";
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.textContent = 'dark_mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                icon.textContent = 'light_mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Apply saved theme on load
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const icon = document.getElementById('theme-icon');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                if(icon) icon.textContent = 'dark_mode';
+            } else {
+                document.documentElement.classList.add('dark');
+                if(icon) icon.textContent = 'light_mode';
+            }
+        })();
     </script>
 </body></html>
