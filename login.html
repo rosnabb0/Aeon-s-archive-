@@ -6,6 +6,8 @@
 <title>Curator's Suite | Aeon's Archive</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&amp;family=Literata:ital,wght@0,400;0,700;1,400&amp;family=Space+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@100..900&amp;family=Literata:wght@100..900&amp;family=Space+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -133,8 +135,6 @@
 
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            vertical-align: middle;
         }
 
         /* Custom Scrollbar */
@@ -155,10 +155,7 @@
 </div>
 <!-- Header Branding -->
 <header class="fixed top-0 w-full flex items-center justify-between px-margin-mobile md:px-margin-desktop h-20 z-50">
-<a class="flex items-center gap-3 hover:opacity-80 transition-opacity" href="index.html">
-<span class="material-symbols-outlined text-secondary text-3xl">auto_awesome</span>
-<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg tracking-tighter text-secondary">AEON'S ARCHIVE</h1>
-</a>
+<a class="flex items-center gap-3 hover:opacity-80 transition-opacity" href="index.html"><span class="material-symbols-outlined text-secondary text-3xl">auto_awesome</span><h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg tracking-tighter text-secondary">AEON'S ARCHIVE</h1></a>
 <div class="font-label-sm text-label-sm text-outline hidden md:block">
             CURATOR'S SUITE ACCESS
         </div>
@@ -178,7 +175,7 @@
 <section class="glass-card rounded-xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
 <!-- Subtle Canvas Texture Overlay -->
 <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/canvas-orange.png');"></div>
-<form action="otp-verify.html" class="space-y-6 relative z-10">
+<form class="space-y-6 relative z-10" id="login-form">
 <!-- Username Field -->
 <div class="space-y-2">
 <label class="font-label-sm text-label-sm text-secondary block uppercase tracking-widest" for="username">
@@ -186,7 +183,7 @@
                     </label>
 <div class="relative group">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-secondary transition-colors">person</span>
-<input class="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/40" id="username" name="username" placeholder="Curator Email" required="" type="text" value=""/>
+<input class="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/40" id="username" name="username" placeholder="Registry Name" type="text"/>
 </div>
 </div>
 <!-- Password Field -->
@@ -196,15 +193,15 @@
                     </label>
 <div class="relative group">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-secondary transition-colors">lock</span>
-<input class="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/40" id="password" name="password" placeholder="••••••••" required="" type="password" value=""/>
+<input class="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/40" id="password" name="password" placeholder="••••••••" type="password"/>
 </div>
-<div class="flex justify-end">
+<div class="hidden text-[10px] text-error font-label-sm uppercase tracking-wider mt-1 italic" id="error-message">Invalid credentials. Access denied.</div><div class="flex justify-end">
 <button class="font-label-sm text-[10px] text-on-surface-variant hover:text-primary transition-colors uppercase tracking-tighter" type="button">
                             Lost your key?
                         </button>
 </div>
 </div>
-<!-- Action Button (Linked to otp-verify.html via form action) -->
+<!-- Action Button -->
 <button class="w-full bg-secondary hover:bg-secondary-fixed text-on-secondary font-headline-lg-mobile py-4 rounded-full flex items-center justify-center gap-3 transition-all active:scale-95 group relative overflow-hidden" type="submit">
 <span class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
 <span class="relative z-10">Enter the Sanctum</span>
@@ -214,9 +211,7 @@
 </section>
 <!-- Social Proof/Atmospheric Quote -->
 <div class="px-6 text-center">
-<p class="font-label-sm text-[10px] text-outline leading-relaxed uppercase tracking-[0.2em]">
-                Protected by the Cobalt Encryption • EST 2026
-            </p>
+<p class="font-label-sm text-[10px] text-outline leading-relaxed uppercase tracking-[0.2em]">Protected by the Cobalt Encryption • EST 2026</p>
 </div>
 </main>
 <!-- Footer Links -->
@@ -264,4 +259,24 @@
             to { transform: scale(4); opacity: 0; }
         }
     </style>
-</body></html>
+<script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-message');
+            
+            if (user === 'asterroz0@gmail.com' && pass === 'aeon_2302') {
+                window.location.href = 'otp-verify.html';
+            } else {
+                errorMsg.classList.remove('hidden');
+                // Shake effect for feedback
+                this.closest('section').animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(5px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 200, iterations: 2 });
+            }
+        });
+    </script></body></html>
