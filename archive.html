@@ -13,6 +13,7 @@
             display: inline-block;
             line-height: 1;
             vertical-align: middle;
+            font-family: 'Material Symbols Outlined';
         }
         
         body {
@@ -56,7 +57,6 @@
             background: rgba(20, 32, 50, 0.6);
             border: 1px solid rgba(233, 195, 58, 0.1);
             transition: all 0.3s ease;
-            cursor: pointer;
         }
         .manuscript-card:hover {
             border-color: #e9c33a;
@@ -219,7 +219,7 @@
                 </h2>
 <span class="font-label-sm text-label-sm text-on-surface-variant" id="count-poem">00 MANUSCRIPTS</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="container-poem">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="poems-list">
 <!-- Empty State -->
 <div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative" id="empty-poem">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
@@ -239,7 +239,7 @@
                 </h2>
 <span class="font-label-sm text-label-sm text-on-surface-variant" id="count-short-story">00 MANUSCRIPTS</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="container-short-story">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="stories-list">
 <!-- Empty State -->
 <div class="md:col-span-3 py-20 flex flex-col items-center text-center manuscript-empty-state relative" id="empty-short-story">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-surface-variant/20 border border-outline/5">
@@ -259,7 +259,7 @@
                 </h2>
 <span class="font-label-sm text-label-sm text-on-surface-variant" id="count-grand-novel">00 MANUSCRIPTS</span>
 </div>
-<div class="grid grid-cols-1 gap-8" id="container-grand-novel">
+<div class="grid grid-cols-1 gap-8" id="novels-list">
 <!-- Empty State -->
 <div class="py-20 flex flex-col items-center text-center manuscript-empty-state relative bg-surface-container-low/30 rounded-2xl" id="empty-grand-novel">
 <div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 text-on-secondary/10 border border-secondary/5">
@@ -286,8 +286,7 @@
 </footer>
 <script>
     // Configuration
-    const STORAGE_KEY = 'aeons_archive_data';
-    const SELECTED_KEY = 'selected_manuscript_id';
+    const STORAGE_KEY = 'aeon_archive_manuscripts';
 
     // Atmospheric star flicker effect
     function createStars() {
@@ -305,34 +304,33 @@
         }
     }
 
-    function openManuscript(id) {
-        window.location.href = `reading-suite.html?id=${id}`;
-    }
-
     function loadManuscripts() {
+        // Retrieve manuscript array from exact storage key
         const manuscripts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         
-        const categories = {
-            'Poem': { container: 'container-poem', empty: 'empty-poem', count: 'count-poem' },
-            'Short Story': { container: 'container-short-story', empty: 'empty-short-story', count: 'count-short-story' },
-            'Grand Novel': { container: 'container-grand-novel', empty: 'empty-grand-novel', count: 'count-grand-novel' }
+        const config = {
+            'Poem': { listId: 'poems-list', emptyId: 'empty-poem', countId: 'count-poem' },
+            'Short Story': { listId: 'stories-list', emptyId: 'empty-short-story', countId: 'count-short-story' },
+            'Grand Novel': { listId: 'novels-list', emptyId: 'empty-grand-novel', countId: 'count-grand-novel' }
         };
 
-        // Reset display
-        Object.values(categories).forEach(cat => {
-            const container = document.getElementById(cat.container);
-            const emptyState = document.getElementById(cat.empty);
+        // Clear dynamic items and show empty states by default
+        Object.values(config).forEach(cfg => {
+            const list = document.getElementById(cfg.listId);
+            const empty = document.getElementById(cfg.emptyId);
             
-            // Clean up old items
-            const items = container.querySelectorAll('.manuscript-card');
-            items.forEach(item => item.remove());
+            // Remove existing manuscript items (keep empty state if it's there)
+            const cards = list.querySelectorAll('.manuscript-card-wrapper');
+            cards.forEach(card => card.remove());
             
-            // Show empty state by default
-            emptyState.style.display = 'flex';
-            document.getElementById(cat.count).textContent = '00 MANUSCRIPTS';
+            if (empty) empty.style.display = 'flex';
+            document.getElementById(cfg.countId).textContent = '00 MANUSCRIPTS';
         });
 
-        // Toggle global empty state (Curator's Silence)
+        // Track counts
+        const counts = { 'Poem': 0, 'Short Story': 0, 'Grand Novel': 0 };
+
+        // Toggle Curator's Silence Memorandum
         const curatorsSilence = document.getElementById('curators-silence');
         if (manuscripts.length > 0) {
             curatorsSilence.style.display = 'none';
@@ -340,50 +338,60 @@
             curatorsSilence.style.display = 'flex';
         }
 
-        const counts = { 'Poem': 0, 'Short Story': 0, 'Grand Novel': 0 };
-
-        manuscripts.forEach(item => {
-            const catInfo = categories[item.category];
-            if (!catInfo) return;
+        // Iterate and append
+        manuscripts.forEach((item, index) => {
+            const typeConfig = config[item.category];
+            if (!typeConfig) return;
 
             counts[item.category]++;
-            const container = document.getElementById(catInfo.container);
-            const emptyState = document.getElementById(catInfo.empty);
+            const list = document.getElementById(typeConfig.listId);
+            const empty = document.getElementById(typeConfig.emptyId);
             
-            emptyState.style.display = 'none';
+            if (empty) empty.style.display = 'none';
 
-            const card = document.createElement('div');
-            card.className = 'manuscript-card p-6 rounded-xl flex flex-col gap-4';
-            card.onclick = () => openManuscript(item.id);
+            // Create entry
+            const wrapper = document.createElement('div');
+            wrapper.className = 'manuscript-card-wrapper';
             
-            // Material symbols rendered via span
+            const card = document.createElement('a');
+            card.href = `reading-suite.html?id=${index}`;
+            card.className = 'manuscript-card block p-6 rounded-xl flex flex-col gap-4 group';
+            
+            const tagsHtml = item.tags ? item.tags.split(',').map(tag => 
+                `<span class="px-2 py-0.5 rounded-full bg-primary/5 border border-primary/10 text-[10px] text-primary/70 uppercase font-label-sm">${tag.trim()}</span>`
+            ).join('') : '';
+
             card.innerHTML = `
                 <div class="flex justify-between items-start">
-                    <span class="font-label-sm text-[10px] text-secondary uppercase tracking-widest">${item.date || 'Year 2026'}</span>
+                    <span class="font-label-sm text-[10px] text-secondary uppercase tracking-widest">${item.date || 'YEAR 2026'}</span>
                     <span class="material-symbols-outlined text-primary/40 text-sm">auto_stories</span>
                 </div>
                 <h3 class="font-headline-lg text-xl text-primary group-hover:text-secondary transition-colors">${item.title}</h3>
                 <p class="font-body-md text-sm text-on-surface-variant line-clamp-3 opacity-80">${item.content.substring(0, 120)}...</p>
                 <div class="mt-auto pt-4 flex flex-wrap gap-2">
-                    ${item.tags ? item.tags.split(',').map(tag => `<span class="px-2 py-0.5 rounded-full bg-primary/5 border border-primary/10 text-[10px] text-primary/70 uppercase font-label-sm">${tag.trim()}</span>`).join('') : ''}
+                    ${tagsHtml}
                 </div>
             `;
-            container.appendChild(card);
+            
+            wrapper.appendChild(card);
+            list.appendChild(wrapper);
         });
 
-        // Update counts
+        // Update count labels
         Object.keys(counts).forEach(key => {
-            const countId = categories[key].count;
+            const cfg = config[key];
             const count = counts[key];
-            document.getElementById(countId).textContent = `${count.toString().padStart(2, '0')} MANUSCRIPT${count === 1 ? '' : 'S'}`;
+            document.getElementById(cfg.countId).textContent = `${count.toString().padStart(2, '0')} MANUSCRIPT${count === 1 ? '' : 'S'}`;
         });
     }
 
-    window.addEventListener('load', () => {
+    // Robust Initialization
+    window.addEventListener('DOMContentLoaded', () => {
         createStars();
         loadManuscripts();
     });
 
+    // Handle cross-tab synchronization
     window.addEventListener('storage', (e) => {
         if (e.key === STORAGE_KEY) {
             loadManuscripts();
