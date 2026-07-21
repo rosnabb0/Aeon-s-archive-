@@ -160,9 +160,9 @@
 <a class="font-display-lg text-headline-md text-primary dark:text-primary tracking-tight font-headline-lg" href="index.html">Aeon's Archive</a>
 </div>
 <div class="hidden md:flex gap-8 items-center">
-<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="poems.html">Poems</a>
-<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="stories.html">Stories</a>
-<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="novels.html">Novels</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="index.html#poems">Poems</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="index.html#short-stories">Stories</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="index.html#novels">Novels</a>
 <a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="chronicle.html">Chronicle</a>
 </div>
 <div class="flex items-center gap-4">
@@ -277,9 +277,9 @@
 <div class="flex flex-col items-center gap-8 px-margin-mobile md:px-margin-desktop text-center max-w-container-max mx-auto">
 <a class="font-display-lg text-primary font-headline-lg" href="index.html">Aeon's Archive</a>
 <div class="flex flex-wrap justify-center gap-8">
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="archive.html">The Inkwell</a>
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="terms.html">Celestial Terms</a>
-<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="map.html">Library Map</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="index.html">The Inkwell</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="#">Celestial Terms</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-container hover:text-primary hover:tracking-widest transition-all duration-700 opacity-80 hover:opacity-100" href="#">Library Map</a>
 </div>
 <div class="font-body-md text-body-md text-on-surface-variant/60">© 2026 Aeon's Archive. Curated for the Eternal Dreamer.</div>
 </div>
@@ -306,7 +306,14 @@
 
     function loadManuscripts() {
         // Retrieve manuscript array from exact storage key
-        const manuscripts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const rawData = localStorage.getItem(STORAGE_KEY);
+        let manuscripts = [];
+        try {
+            manuscripts = JSON.parse(rawData || '[]');
+        } catch (e) {
+            console.error("Failed to parse manuscripts from storage", e);
+            manuscripts = [];
+        }
         
         const config = {
             'Poem': { listId: 'poems-list', emptyId: 'empty-poem', countId: 'count-poem' },
@@ -314,31 +321,34 @@
             'Grand Novel': { listId: 'novels-list', emptyId: 'empty-grand-novel', countId: 'count-grand-novel' }
         };
 
-        // Clear dynamic items and show empty states by default
-        Object.values(config).forEach(cfg => {
-            const list = document.getElementById(cfg.listId);
-            const empty = document.getElementById(cfg.emptyId);
-            
-            // Remove existing manuscript items (keep empty state if it's there)
-            const cards = list.querySelectorAll('.manuscript-card-wrapper');
-            cards.forEach(card => card.remove());
-            
-            if (empty) empty.style.display = 'flex';
-            document.getElementById(cfg.countId).textContent = '00 MANUSCRIPTS';
-        });
-
         // Track counts
         const counts = { 'Poem': 0, 'Short Story': 0, 'Grand Novel': 0 };
 
+        // Reset lists and hide empty states temporarily
+        Object.values(config).forEach(cfg => {
+            const list = document.getElementById(cfg.listId);
+            if (list) {
+                // Clear existing cards
+                const cards = list.querySelectorAll('.manuscript-card-wrapper');
+                cards.forEach(card => card.remove());
+                
+                // Show empty state by default
+                const empty = document.getElementById(cfg.emptyId);
+                if (empty) empty.style.display = 'flex';
+                
+                // Reset count text
+                const countLabel = document.getElementById(cfg.countId);
+                if (countLabel) countLabel.textContent = '00 MANUSCRIPTS';
+            }
+        });
+
         // Toggle Curator's Silence Memorandum
         const curatorsSilence = document.getElementById('curators-silence');
-        if (manuscripts.length > 0) {
-            curatorsSilence.style.display = 'none';
-        } else {
-            curatorsSilence.style.display = 'flex';
+        if (curatorsSilence) {
+            curatorsSilence.style.display = manuscripts.length > 0 ? 'none' : 'flex';
         }
 
-        // Iterate and append
+        // Loop through manuscripts and append correctly
         manuscripts.forEach((item, index) => {
             const typeConfig = config[item.category];
             if (!typeConfig) return;
@@ -348,6 +358,7 @@
             const empty = document.getElementById(typeConfig.emptyId);
             
             if (empty) empty.style.display = 'none';
+            if (!list) return;
 
             // Create entry
             const wrapper = document.createElement('div');
@@ -355,19 +366,22 @@
             
             const card = document.createElement('a');
             card.href = `reading-suite.html?id=${index}`;
-            card.className = 'manuscript-card block p-6 rounded-xl flex flex-col gap-4 group';
+            card.className = 'manuscript-card block p-6 rounded-xl flex flex-col gap-4 group h-full';
             
             const tagsHtml = item.tags ? item.tags.split(',').map(tag => 
                 `<span class="px-2 py-0.5 rounded-full bg-primary/5 border border-primary/10 text-[10px] text-primary/70 uppercase font-label-sm">${tag.trim()}</span>`
             ).join('') : '';
+
+            // Clean preview content
+            const contentPreview = item.content ? item.content.substring(0, 120) + '...' : 'An untranscribed manuscript...';
 
             card.innerHTML = `
                 <div class="flex justify-between items-start">
                     <span class="font-label-sm text-[10px] text-secondary uppercase tracking-widest">${item.date || 'YEAR 2026'}</span>
                     <span class="material-symbols-outlined text-primary/40 text-sm">auto_stories</span>
                 </div>
-                <h3 class="font-headline-lg text-xl text-primary group-hover:text-secondary transition-colors">${item.title}</h3>
-                <p class="font-body-md text-sm text-on-surface-variant line-clamp-3 opacity-80">${item.content.substring(0, 120)}...</p>
+                <h3 class="font-headline-lg text-xl text-primary group-hover:text-secondary transition-colors">${item.title || 'Untitled Manuscript'}</h3>
+                <p class="font-body-md text-sm text-on-surface-variant line-clamp-3 opacity-80">${contentPreview}</p>
                 <div class="mt-auto pt-4 flex flex-wrap gap-2">
                     ${tagsHtml}
                 </div>
@@ -381,21 +395,5 @@
         Object.keys(counts).forEach(key => {
             const cfg = config[key];
             const count = counts[key];
-            document.getElementById(cfg.countId).textContent = `${count.toString().padStart(2, '0')} MANUSCRIPT${count === 1 ? '' : 'S'}`;
-        });
-    }
-
-    // Robust Initialization
-    window.addEventListener('DOMContentLoaded', () => {
-        createStars();
-        loadManuscripts();
-    });
-
-    // Handle cross-tab synchronization
-    window.addEventListener('storage', (e) => {
-        if (e.key === STORAGE_KEY) {
-            loadManuscripts();
-        }
-    });
-</script>
-</body></html>
+            const label = document.getElementById(cfg.countId);
+ 
