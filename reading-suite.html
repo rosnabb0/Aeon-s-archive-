@@ -393,4 +393,17 @@
             const toolButtons = document.querySelectorAll('#tool-bar button');
             toolButtons.forEach(btn => {
                 btn.addEventListener('mousedown', function() {
-                    this.classList.add('sca
+                    this.classList.add('scale-90');
+});
+
+btn.addEventListener('mouseup', function() {
+this.classList.remove('scale-90');
+});
+
+btn.addEventListener('mouseleave', function() {
+this.classList.remove('scale-90');
+});
+});
+};
+</script>
+</body></html>
