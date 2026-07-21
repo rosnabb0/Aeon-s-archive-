@@ -175,7 +175,7 @@
 </header>
 <div class="flex pt-20 flex-1 relative">
 <!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container dark:bg-surface-container-low border-r border-outline/20 shadow-2xl flex flex-col p-gutter space-y-unit transition-all duration-500 relative" id="side-nav"><button class="absolute -right-10 top-24 bg-surface-container border border-outline/20 p-2 rounded-r-xl text-primary hover:bg-surface-variant transition-all duration-300 z-50" id="sidebar-toggle" title="Toggle Sidebar"><span class="material-symbols-outlined transition-transform duration-300" id="toggle-icon">chevron_left</span></button>
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container dark:bg-surface-container-low border-r border-outline/20 shadow-2xl flex flex-col p-gutter space-y-unit transition-all duration-500" id="side-nav">
 <div class="mb-12 mt-16">
 <h2 class="font-display-lg text-primary text-2xl">Reading Suite</h2>
 <p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant mt-2">Scholarly Tools</p>
@@ -262,157 +262,135 @@
 </div>
 </footer>
 <script>
-    // Configuration & State
-    const manuscriptElement = document.getElementById('manuscript-content');
-    const parchment = document.getElementById('manuscript-parchment');
-    const emptyState = document.getElementById('empty-state');
-    let fontSizeRem = 1.0; 
-    let isFocusMode = false;
+        // Configuration & State
+        const MASTER_DATA_KEY = 'AEON_ARCHIVE_MASTER_DATA';
+        const manuscriptElement = document.getElementById('manuscript-content');
+        const parchment = document.getElementById('manuscript-parchment');
+        const emptyState = document.getElementById('empty-state');
+        let fontSizeRem = 1.0; 
+        let isFocusMode = false;
 
-    /**
-     * Retrieval Logic:
-     * 1. Checks LocalStorage for 'selected_manuscript_id'.
-     * 2. Searches 'aeon_archive_data' for the entry.
-     * 3. Renders or shows Empty State.
-     */
-    function loadManuscript() {
-        const manuscriptId = localStorage.getItem('selected_manuscript_id');
-        const archiveDataRaw = localStorage.getItem('aeon_archive_data');
-        
-        if (manuscriptId && archiveDataRaw) {
+        /**
+         * Retrieval Logic:
+         * 1. Checks URL for 'id' parameter.
+         * 2. Searches 'AEON_ARCHIVE_MASTER_DATA' in LocalStorage for the entry.
+         * 3. Renders or shows Empty State.
+         */
+        function loadManuscript() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const manuscriptId = urlParams.get('id');
+            const archiveDataRaw = localStorage.getItem(MASTER_DATA_KEY);
+            
+            if (!manuscriptId || !archiveDataRaw) {
+                showEmptyState();
+                return;
+            }
+
             try {
                 const archiveData = JSON.parse(archiveDataRaw);
-                const manuscript = archiveData.find(m => m.id === manuscriptId);
+                // Ensure archiveData is an array before searching
+                if (!Array.isArray(archiveData)) {
+                    showEmptyState();
+                    return;
+                }
+
+                // Search for specific ID (handles both string and number comparison)
+                const manuscript = archiveData.find(m => String(m.id) === String(manuscriptId));
                 
                 if (manuscript) {
-                    // Update Metadata
-                    document.getElementById('manuscript-title').textContent = manuscript.title || "Untitled Manuscript";
-                    document.getElementById('manuscript-collection').textContent = `Collection: ${manuscript.collection || "Celestial Echoes"}`;
-                    document.getElementById('manuscript-source').textContent = manuscript.source || "Transcribed from the Eternal Library";
-                    document.getElementById('manuscript-footer-text').textContent = `END OF MANUSCRIPT ${manuscript.id}`;
-                    
-                    // Render Content
-                    const rawContent = manuscript.body || manuscript.content || "";
-                    if (rawContent) {
-                        // Check if content is already HTML or needs formatting
-                        if (rawContent.includes('<p>') || rawContent.includes('</section>')) {
-                            manuscriptElement.innerHTML = rawContent;
-                        } else {
-                            // Format plain text into stanzas
-                            const stanzas = rawContent.split('\n\n');
-                            manuscriptElement.innerHTML = stanzas.map(stanza => `
-                                <section class="stanza">
-                                    ${stanza.split('\n').map(line => `<p class="my-1">${line.trim()}</p>`).join('')}
-                                </section>
-                            `).join('');
-                        }
-                        
-                        parchment.classList.remove('hidden');
-                        emptyState.classList.add('hidden');
-                    } else {
-                        showEmptyState();
-                    }
+                    renderManuscript(manuscript);
                 } else {
                     showEmptyState();
                 }
             } catch (e) {
-                console.error("Archive retrieval error", e);
+                console.error("Archive synchronization error", e);
                 showEmptyState();
             }
-        } else {
-            showEmptyState();
         }
-    }
 
-    function showEmptyState() {
-        parchment.classList.add('hidden');
-        emptyState.classList.remove('hidden');
-    }
-
-    // Font Scaling Logic
-    function updateFontSize() {
-        manuscriptElement.style.fontSize = `${fontSizeRem}em`;
-    }
-
-    document.getElementById('btn-bigger').addEventListener('click', () => {
-        if (fontSizeRem < 2.5) {
-            fontSizeRem += 0.1;
-            updateFontSize();
-        }
-    });
-
-    document.getElementById('btn-smaller').addEventListener('click', () => {
-        if (fontSizeRem > 0.6) {
-            fontSizeRem -= 0.1;
-            updateFontSize();
-        }
-    });
-
-    // Focus Mode Toggle
-    document.getElementById('btn-focus').addEventListener('click', () => {
-        isFocusMode = !isFocusMode;
-        document.body.classList.toggle('focus-mode', isFocusMode);
-        
-        const focusIcon = document.querySelector('#btn-focus span.material-symbols-outlined');
-        const focusLabel = document.querySelector('#btn-focus span:last-child');
-        if (isFocusMode) {
-            focusIcon.textContent = 'visibility';
-            focusLabel.textContent = 'EXIT';
-        } else {
-            focusIcon.textContent = 'auto_stories';
-            focusLabel.textContent = 'FOCUS';
-        }
-    });
-
-    // Keyboard Shortcuts
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && isFocusMode) {
-            document.getElementById('btn-focus').click();
-        }
-    });
-
-    // Initialize
-    window.onload = () => {
-        loadManuscript();
-        
-        // UI Interaction feedbacks
-        const toolButtons = document.querySelectorAll('#tool-bar button');
-        toolButtons.forEach(btn => {
-            btn.addEventListener('mousedown', function() {
-                this.classList.add('scale-90');
-            });
-            btn.addEventListener('mouseup', function() {
-                this.classList.remove('scale-90');
-            });
-            btn.addEventListener('mouseleave', function() {
-                this.classList.remove('scale-90');
-            });
-        });
-    };
-</script>
-<script>
-    (function() {
-        const sideNav = document.getElementById('side-nav');
-        const mainContent = document.querySelector('main');
-        const toggleBtn = document.getElementById('sidebar-toggle');
-        const toggleIcon = document.getElementById('toggle-icon');
-        let isCollapsed = false;
-
-        toggleBtn.addEventListener('click', () => {
-            isCollapsed = !isCollapsed;
-            if (isCollapsed) {
-                sideNav.style.transform = 'translateX(-100%)';
-                mainContent.style.marginLeft = '0';
-                toggleIcon.style.transform = 'rotate(180deg)';
-                toggleBtn.style.right = '-40px';
+        function renderManuscript(manuscript) {
+            // Update Metadata
+            document.getElementById('manuscript-title').textContent = manuscript.title || "Untitled Manuscript";
+            document.getElementById('manuscript-collection').textContent = manuscript.collection ? `Collection: ${manuscript.collection}` : "Collection: Celestial Echoes";
+            document.getElementById('manuscript-source').textContent = manuscript.source || "Transcribed from the Eternal Library";
+            document.getElementById('manuscript-footer-text').textContent = `END OF MANUSCRIPT - ARCHIVE REF: ${manuscript.id}`;
+            
+            // Render Content
+            const rawContent = manuscript.body || manuscript.content || "";
+            if (rawContent) {
+                // Formatting logic: detect HTML or convert text stanzas
+                if (rawContent.includes('<p>') || rawContent.includes('</section>') || rawContent.includes('<div>')) {
+                    manuscriptElement.innerHTML = rawContent;
+                } else {
+                    // Split by double newlines for poetic stanzas
+                    const stanzas = rawContent.split(/\n\n+/);
+                    manuscriptElement.innerHTML = stanzas.map(stanza => `
+                        <section class="stanza">
+                            ${stanza.split('\n').map(line => `<p class="my-1">${line.trim()}</p>`).join('')}
+                        </section>
+                    `).join('');
+                }
+                
+                parchment.classList.remove('hidden');
+                emptyState.classList.add('hidden');
             } else {
-                sideNav.style.transform = 'translateX(0)';
-                mainContent.style.marginLeft = '16rem';
-                toggleIcon.style.transform = 'rotate(0deg)';
-                toggleBtn.style.right = '-2.5rem';
+                showEmptyState();
+            }
+        }
+
+        function showEmptyState() {
+            parchment.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+        }
+
+        // Font Scaling Logic
+        function updateFontSize() {
+            manuscriptElement.style.fontSize = `${fontSizeRem}em`;
+        }
+
+        document.getElementById('btn-bigger').addEventListener('click', () => {
+            if (fontSizeRem < 2.5) {
+                fontSizeRem += 0.1;
+                updateFontSize();
             }
         });
-    })();
-</script>
-</body>
-</html>
+
+        document.getElementById('btn-smaller').addEventListener('click', () => {
+            if (fontSizeRem > 0.6) {
+                fontSizeRem -= 0.1;
+                updateFontSize();
+            }
+        });
+
+        // Focus Mode Toggle
+        document.getElementById('btn-focus').addEventListener('click', () => {
+            isFocusMode = !isFocusMode;
+            document.body.classList.toggle('focus-mode', isFocusMode);
+            
+            const focusIcon = document.querySelector('#btn-focus span.material-symbols-outlined');
+            const focusLabel = document.querySelector('#btn-focus span:last-child');
+            if (isFocusMode) {
+                focusIcon.textContent = 'visibility';
+                focusLabel.textContent = 'EXIT';
+            } else {
+                focusIcon.textContent = 'auto_stories';
+                focusLabel.textContent = 'FOCUS';
+            }
+        });
+
+        // Keyboard Shortcuts
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isFocusMode) {
+                document.getElementById('btn-focus').click();
+            }
+        });
+
+        // Initialize
+        window.onload = () => {
+            loadManuscript();
+            
+            // UI Interaction feedbacks
+            const toolButtons = document.querySelectorAll('#tool-bar button');
+            toolButtons.forEach(btn => {
+                btn.addEventListener('mousedown', function() {
+                    this.classList.add('sca
