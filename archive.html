@@ -395,5 +395,26 @@
         Object.keys(counts).forEach(key => {
             const cfg = config[key];
             const count = counts[key];
+            
             const label = document.getElementById(cfg.countId);
+            if (label) {
+                label.textContent = `${count.toString().padStart(2, '0')} MANUSCRIPT${count === 1 ? '' : 'S'}`;
+            }
+        });
+    }
+
+    // Initial load
+    window.addEventListener('DOMContentLoaded', () => {
+        createStars();
+        loadManuscripts();
+    });
+
+    // Handle cross-tab synchronization
+    window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY) {
+            loadManuscripts();
+        }
+    });
+</script>
+</body></html>
  
