@@ -204,7 +204,7 @@
 <div class="hidden text-center py-40" id="empty-state">
 <span class="material-symbols-outlined text-primary text-6xl mb-6">drafts</span>
 <h3 class="font-display-lg text-2xl text-on-surface mb-4">The Archive is Silent</h3>
-<p class="font-body-md text-on-surface-variant max-w-sm mx-auto">No manuscript is currently open for study. Please return to the archive to select a work.</p>
+<p class="font-body-md text-on-surface-variant max-w-sm mx-auto" id="error-message">No manuscript is currently open for study. Please return to the archive to select a work.</p>
 <a class="inline-block mt-8 px-8 py-3 bg-primary text-on-primary rounded-full font-label-sm tracking-widest hover:brightness-110 transition-all" href="archive.html">VISIT ARCHIVE</a>
 </div>
 <!-- Manuscript Parchment -->
@@ -267,44 +267,50 @@
         const manuscriptElement = document.getElementById('manuscript-content');
         const parchment = document.getElementById('manuscript-parchment');
         const emptyState = document.getElementById('empty-state');
+        const errorText = document.getElementById('error-message');
+        
         let fontSizeRem = 1.0; 
         let isFocusMode = false;
 
         /**
-         * Retrieval Logic:
-         * 1. Checks URL for 'id' parameter.
-         * 2. Searches 'AEON_ARCHIVE_MASTER_DATA' in LocalStorage for the entry.
-         * 3. Renders or shows Empty State.
+         * Robust Retrieval Logic
          */
         function loadManuscript() {
             const urlParams = new URLSearchParams(window.location.search);
             const manuscriptId = urlParams.get('id');
-            const archiveDataRaw = localStorage.getItem(MASTER_DATA_KEY);
             
-            if (!manuscriptId || !archiveDataRaw) {
-                showEmptyState();
+            console.log(`[Archive Suite] Loading Manuscript ID: ${manuscriptId}`);
+
+            if (!manuscriptId) {
+                showEmptyState("No manuscript ID was provided. Please return to the archive to select a work.");
+                return;
+            }
+
+            const archiveDataRaw = localStorage.getItem(MASTER_DATA_KEY);
+            if (!archiveDataRaw) {
+                showEmptyState("The local library data is missing. Please visit the Archive to initialize your collection.");
                 return;
             }
 
             try {
                 const archiveData = JSON.parse(archiveDataRaw);
-                // Ensure archiveData is an array before searching
+                
                 if (!Array.isArray(archiveData)) {
-                    showEmptyState();
+                    showEmptyState("Library data is corrupted. Please refresh the Archive page.");
                     return;
                 }
 
-                // Search for specific ID (handles both string and number comparison)
+                // Search for specific ID
                 const manuscript = archiveData.find(m => String(m.id) === String(manuscriptId));
                 
                 if (manuscript) {
                     renderManuscript(manuscript);
                 } else {
-                    showEmptyState();
+                    showEmptyState(`Manuscript ${manuscriptId} could not be found in your local collection.`);
                 }
             } catch (e) {
-                console.error("Archive synchronization error", e);
-                showEmptyState();
+                console.error("[Archive Suite] Diagnostic Error:", e);
+                showEmptyState("An error occurred while retrieving the manuscript from storage.");
             }
         }
 
@@ -318,11 +324,9 @@
             // Render Content
             const rawContent = manuscript.body || manuscript.content || "";
             if (rawContent) {
-                // Formatting logic: detect HTML or convert text stanzas
                 if (rawContent.includes('<p>') || rawContent.includes('</section>') || rawContent.includes('<div>')) {
                     manuscriptElement.innerHTML = rawContent;
                 } else {
-                    // Split by double newlines for poetic stanzas
                     const stanzas = rawContent.split(/\n\n+/);
                     manuscriptElement.innerHTML = stanzas.map(stanza => `
                         <section class="stanza">
@@ -334,11 +338,12 @@
                 parchment.classList.remove('hidden');
                 emptyState.classList.add('hidden');
             } else {
-                showEmptyState();
+                showEmptyState("This manuscript appears to be blank in the archive.");
             }
         }
 
-        function showEmptyState() {
+        function showEmptyState(msg) {
+            if (msg) errorText.textContent = msg;
             parchment.classList.add('hidden');
             emptyState.classList.remove('hidden');
         }
@@ -385,25 +390,4 @@
             }
         });
 
-        // Initialize
-        window.onload = () => {
-            loadManuscript();
-            
-            // UI Interaction feedbacks
-            const toolButtons = document.querySelectorAll('#tool-bar button');
-            toolButtons.forEach(btn => {
-                btn.addEventListener('mousedown', function() {
-                    this.classList.add('scale-90');
-});
-
-btn.addEventListener('mouseup', function() {
-this.classList.remove('scale-90');
-});
-
-btn.addEventListener('mouseleave', function() {
-this.classList.remove('scale-90');
-});
-});
-};
-</script>
-</body></html>
+        // F
