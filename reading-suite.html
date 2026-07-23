@@ -390,4 +390,24 @@
             }
         });
 
-        // F
+        // Forced Refresh Logic for Browser Back Button
+        window.addEventListener('pageshow', (event) => {
+            // event.persisted is true when the page is loaded from the bfcache
+            loadManuscript();
+        });
+
+        // UI Interaction Feedbacks
+        const toolButtons = document.querySelectorAll('#tool-bar button');
+        toolButtons.forEach(btn => {
+            btn.addEventListener('mousedown', function() {
+                this.classList.add('scale-90');
+            });
+            btn.addEventListener('mouseup', function() {
+                this.classList.remove('scale-90');
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.classList.remove('scale-90');
+            });
+        });
+    </script>
+</body></html>
