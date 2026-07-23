@@ -365,7 +365,7 @@
             wrapper.className = 'manuscript-card-wrapper';
             
             const card = document.createElement('a');
-            card.href = `reading-suite.html?id=${index}`;
+            card.href = `reading-suite.html?id=${item.id}`;
             card.className = 'manuscript-card block p-6 rounded-xl flex flex-col gap-4 group h-full';
             
             const tagsHtml = item.tags ? item.tags.split(',').map(tag => 
@@ -373,7 +373,7 @@
             ).join('') : '';
 
             // Clean preview content
-            const contentPreview = item.content ? item.content.substring(0, 120) + '...' : 'An untranscribed manuscript...';
+            const contentPreview = item.body ? item.body.substring(0, 120) + '...' : 'An untranscribed manuscript...';
 
             card.innerHTML = `
                 <div class="flex justify-between items-start">
